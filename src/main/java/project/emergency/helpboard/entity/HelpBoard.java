@@ -17,17 +17,17 @@ public class HelpBoard extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int boardNo;
+    int helpboardNo;
 
     @ManyToOne
-    Member writer;
+    Member helpwriter;
 
     @Column(length = 50, nullable = false)
-    String title;
+    String helpTitle;
 
     @Column(length = 200, nullable = false)
-    String content;
+    String helpContent;
 
     @Column(nullable = true)
-    int likes;
+    int helpLikes;
 }

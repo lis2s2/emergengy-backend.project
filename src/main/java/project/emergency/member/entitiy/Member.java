@@ -15,24 +15,24 @@ import project.emergency.base.entity.BaseEntity;
 public class Member extends BaseEntity {
 
     @Id
+    @Column(length = 20, nullable = false)
+    String memId;
+
+    @Column(length = 20, nullable = false)
+    String memPwd;
+
     @Column(length = 50, nullable = false)
-    String id;
-
-    @Column(length = 30, nullable = false)
-    String password;
-
-    @Column(length = 50, nullable = false)
-    String email;
+    String memEmail;
 
     @Column(length = 20, nullable = false)
-    String name;
+    String memName;
 
     @Column(length = 20, nullable = false)
-    String nickName;
+    String memNick;
 
     @Column(length = 20, nullable = false)
-    String role;
+    String memGrade;
 
     @Column(nullable = true)
-    int point;
+    int memPoint;
 }

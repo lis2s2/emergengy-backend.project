@@ -20,11 +20,11 @@ public class Cart {
     int cartNo;
 
     @ManyToOne
-    Shop product;
+    Shop cartProd;
 
     @ManyToOne
     Member customer;
 
     @Column(nullable = false)
-    int productCount;
+    int prodCount;
 }

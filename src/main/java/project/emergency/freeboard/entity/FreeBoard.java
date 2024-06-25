@@ -17,17 +17,17 @@ public class FreeBoard extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int boardNo;
+    int freeboardNo;
 
     @ManyToOne
-    Member writer;
+    Member freeWriter;
 
     @Column(length = 50, nullable = false)
-    String title;
+    String freeTitle;
 
     @Column(length = 200, nullable = false)
-    String content;
+    String freeContent;
 
     @Column(nullable = true)
-    int likes;
+    int freeLikes;
 }

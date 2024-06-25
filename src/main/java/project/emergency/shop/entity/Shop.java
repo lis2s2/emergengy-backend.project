@@ -16,13 +16,13 @@ public class Shop extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int productNo;
+    int prodNo;
 
     @Column(length = 50, nullable = false)
-    String productName;
+    String prodName;
 
     @Column(nullable = false)
-    int productPoint;
+    int prodPoint;
 
     @Column(length = 200, nullable = false)
     String imgPath;

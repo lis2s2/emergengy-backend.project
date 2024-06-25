@@ -18,14 +18,14 @@ public class FreeComment extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int commentNo;
+    int freecmtNo;
 
     @ManyToOne
-    FreeBoard board;
+    FreeBoard freeboardNo;
 
     @ManyToOne
-    Member writer;
+    Member freeWriter;
 
     @Column(length = 200, nullable = false)
-    String content;
+    String freeContent;
 }

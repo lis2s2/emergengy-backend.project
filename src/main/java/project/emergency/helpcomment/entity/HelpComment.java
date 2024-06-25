@@ -19,14 +19,14 @@ public class HelpComment extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int commentNo;
+    int helpcmtNo;
 
     @ManyToOne
-    HelpBoard board;
+    HelpBoard helpboardNo;
 
     @ManyToOne
-    Member writer;
+    Member helpWriter;
 
     @Column(length = 200, nullable = false)
-    String content;
+    String helpContent;
 }
