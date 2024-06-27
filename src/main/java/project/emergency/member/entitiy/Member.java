@@ -18,7 +18,7 @@ public class Member extends BaseEntity {
     @Column(length = 20, nullable = false)
     String memId;
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 100, nullable = false)
     String memPwd;
 
     @Column(length = 50, nullable = false)
@@ -32,6 +32,9 @@ public class Member extends BaseEntity {
 
     @Column(length = 20, nullable = false)
     String memGrade;
+
+    @Column(length = 100, nullable = false)
+    String memRole;
 
     @Column(nullable = true)
     int memPoint;
