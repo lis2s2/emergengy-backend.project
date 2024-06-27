@@ -53,6 +53,9 @@ public class MemberServiceImp implements MemberService {
         // 기본 등급 설정
         entity.setMemGrade("Regular");
 
+        // 기본 포인트 설정
+        entity.setMemPoint(0);
+
         // 패스워드 인코더로 패스워드 암호화하기
         String enPw = passwordEncoder.encode(entity.getMemPwd());
         entity.setMemPwd(enPw);
@@ -72,10 +75,21 @@ public class MemberServiceImp implements MemberService {
         }
     }
 
+    // 아이디 중복 확인 메서드
+    private boolean isIdDuplicate(String memId) {
+        return repository.findById(memId).isPresent();
+    }
+
+    // 이메일 중복 확인 메서드
+//    private boolean isEmailDuplicate(String memEmail) {
+//        // 이메일로 멤버를 찾는 로직이 구현되어 있다고 가정합니다.
+//        return repository.findByEmail(memEmail).isPresent();
+//    }
 
     // 멤버 등급 업데이트 메서드
     @Override
     public void updateMemberGrade(MemberDTO memberDTO) {
+
         memberDTO.updateGrade();
     }
 }

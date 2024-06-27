@@ -26,7 +26,9 @@ public class MemberDTO {
 
     String memRole; // 권한
 
-    int memPoint; // 포인트
+    // 기본 포인트가 0이 되게끔 하는 어노테이션
+    @Builder.Default
+    int memPoint = 0; // 포인트
 
     LocalDateTime regDate; //등록일
 

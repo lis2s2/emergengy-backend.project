@@ -11,14 +11,15 @@ import project.emergency.member.service.MemberService;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class MemberController {
 
     @Autowired
     MemberService service;
 
-//    @GetMapping("/register")
-//    public void register() {
-//    }
+    @GetMapping("/register")
+    public void register() {
+    }
 
     @PostMapping("/register")
     public ResponseEntity<Boolean> register(@RequestBody MemberDTO dto) {
@@ -38,4 +39,11 @@ public class MemberController {
 //        model.addAttribute("dto", dto);
 //        model.addAttribute("page", page);
 //    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<MemberDTO> read(@PathVariable String id) {
+        MemberDTO dto = service.read(id);
+        return dto != null ? new ResponseEntity<>(dto, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND); // 200 성공 코드와 회원 정보 반환, 없으면 404 반환
+    }
 }
