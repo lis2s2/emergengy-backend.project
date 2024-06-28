@@ -46,7 +46,6 @@ public class MemberServiceImp implements MemberService {
 //        }
         // 아이디나 이메일 중복 시 false 반환
         if (repository.existsById(dto.getMemId()) || repository.existsByMemEmail(dto.getMemEmail())) {
-            alert(message);
             return false;
         }
 

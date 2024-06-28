@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,6 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import project.emergency.security.filter.ApiCheckFilter;
 import project.emergency.security.filter.ApiLoginFilter;
 import project.emergency.security.service.UserDetailsServiceImpl;
@@ -80,7 +82,11 @@ public class SecurityConfig {
                 .and()
                 .csrf().disable() //csrf 비활성화
                 //토큰을 사용하니까 세션은 사용안함
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessHandler(logoutSuccessHandler());
 
         // 3.로그인 필터 등록: 로그인 요청이 들어오면 토큰 발급
 
@@ -145,6 +151,33 @@ public class SecurityConfig {
                 response.getWriter().write("인증되지 않은 사용자입니다.");
             }
         };
+        return handler;
+    }
+
+    @Bean
+    public LogoutSuccessHandler logoutSuccessHandler() {
+
+        LogoutSuccessHandler handler = new LogoutSuccessHandler() {
+
+            @Override
+            public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
+                                        Authentication authentication) throws IOException, ServletException {
+
+                String token = request.getHeader("Authorization");
+                if (token != null) {
+                    jwtUtil().invalidateToken(token);
+                    response.setStatus(HttpServletResponse.SC_OK);
+                    response.setContentType("text/html; charset=UTF-8");
+                    response.getWriter().write("로그아웃에 성공했습니다. 더이상 해당 토큰을 사용할 수 없습니다.");
+                } else {
+                    response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                    response.setContentType("text/html; charset=UTF-8");
+                    response.getWriter().write("헤더에 토큰이 없어 로그아웃에 실패했습니다");
+                }
+
+            }
+        };
+
         return handler;
     }
 }
