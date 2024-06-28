@@ -27,24 +27,26 @@ public class MemberServiceImp implements MemberService {
         List<Member> entityList = repository.findAll();
 
         List<MemberDTO> dtoList = entityList.stream()
-                .map(entity -> entityToDto(entity))
-                .collect(Collectors.toList());
+                                            .map(entity -> entityToDto(entity))
+                                            .collect(Collectors.toList());
 
         return dtoList;
     }
 
     @Override
     public boolean register(MemberDTO dto) {
-        String id = dto.getMemId();
-        MemberDTO getDtoId = read(id);
-
-        String email = dto.getMemEmail();
-        MemberDTO getDtoEmail = read(email);
-        if (getDtoId != null) {
-            System.out.println("사용중인 아이디입니다.");
-            return false;
-        } else if (getDtoEmail != null) {
-            System.out.println("사용중인 이메일입니다.");
+//        String id = dto.getMemId();
+//        MemberDTO getDtoId = readId(id);
+//
+//        String email = dto.getMemEmail();
+//        MemberDTO getDtoEmail = readEmail(email);
+//
+//        if (getDtoId != null || getDtoEmail != null) {
+//            return false;
+//        }
+        // 아이디나 이메일 중복 시 false 반환
+        if (repository.existsById(dto.getMemId()) || repository.existsByMemEmail(dto.getMemEmail())) {
+            alert(message);
             return false;
         }
 
@@ -56,6 +58,9 @@ public class MemberServiceImp implements MemberService {
         // 기본 포인트 설정
         entity.setMemPoint(0);
 
+        // 기본 권한 설정
+        entity.setMemRole("ROLE_USER");
+
         // 패스워드 인코더로 패스워드 암호화하기
         String enPw = passwordEncoder.encode(entity.getMemPwd());
         entity.setMemPwd(enPw);
@@ -65,12 +70,36 @@ public class MemberServiceImp implements MemberService {
     }
 
     @Override
-    public MemberDTO read(String id) {
+    public boolean login(MemberDTO dto) {
+        Optional<Member> idOpt = repository.findById(dto.getMemId());
+
+        if (idOpt.isPresent()) {
+            Member member = idOpt.get();
+            return passwordEncoder.matches(dto.getMemPwd(), member.getMemPwd());
+        }
+        return false;
+    }
+
+    @Override
+    public MemberDTO readId(String id) {
         Optional<Member> result = repository.findById(id);
         if (result.isPresent()) {
             Member member = result.get();
             return entityToDto(member);
-        } else {
+        }
+        else {
+            return null;
+        }
+    }
+
+    @Override
+    public MemberDTO readEmail(String email) {
+        Optional<Member> result = repository.findById(email);
+        if (result.isPresent()) {
+            Member member = result.get();
+            return entityToDto(member);
+        }
+        else {
             return null;
         }
     }
@@ -81,10 +110,9 @@ public class MemberServiceImp implements MemberService {
     }
 
     // 이메일 중복 확인 메서드
-//    private boolean isEmailDuplicate(String memEmail) {
-//        // 이메일로 멤버를 찾는 로직이 구현되어 있다고 가정합니다.
-//        return repository.findByEmail(memEmail).isPresent();
-//    }
+    private boolean isEmailDuplicate(String memEmail) {
+        return repository.findByMemEmail(memEmail).isPresent();
+    }
 
     // 멤버 등급 업데이트 메서드
     @Override

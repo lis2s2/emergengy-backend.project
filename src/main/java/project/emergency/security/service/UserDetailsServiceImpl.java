@@ -22,12 +22,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     // 사용자 아이디를 기반으로 인증객체를 생성하는 메소드
     @Override
-    public UserDetails loadUserByUsername(String memNick) { // userName는 아이디를 의미
+    public UserDetails loadUserByUsername(String memNick) {
 
         System.out.println("login id : " + memNick);
 
         // 아이디로 실제 회원정보 가져오기
-        MemberDTO dto = service.read(memNick);
+        MemberDTO dto = service.readId(memNick);
 
         if(dto == null) {
             throw new UsernameNotFoundException(""); //사용자 정보가 없다면 에러를 발생시킴

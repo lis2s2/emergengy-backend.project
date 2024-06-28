@@ -34,6 +34,7 @@ public class MemberDTO {
 
     LocalDateTime modDate; //수정일
 
+    // 등급 업데이트 메소드
     public void updateGrade() {
         if (memPoint >= 30000) {
             setMemGrade("Gold");

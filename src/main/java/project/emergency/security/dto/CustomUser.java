@@ -10,6 +10,5 @@ public class CustomUser extends User {
 
     public CustomUser(MemberDTO dto) {
         super(dto.getMemId(), dto.getMemPwd(), Arrays.asList(new SimpleGrantedAuthority(dto.getMemRole())));
-//        super(dto.getMemId(), dto.getMemPwd(), dto.getMemName(), dto.getMemEmail(), dto.getMemNick(), Arrays.asList((new SimpleGrantedAuthority(dto.getMemGrade()))));
     }
 }

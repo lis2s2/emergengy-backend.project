@@ -11,7 +11,11 @@ public interface MemberService {
 
     boolean register(MemberDTO dto); // 회원 등록
 
-    MemberDTO read(String id); // 회원 단건 조회
+    boolean login(MemberDTO dto); // 로그인
+
+    MemberDTO readId(String id); // 회원 아이디 단건 조회
+
+    MemberDTO readEmail(String email); // 회원 이메일 단건 조회
 
     // 엔티티를 DTO로 변환하는 메소드
     default MemberDTO entityToDto(Member entity) {
@@ -48,5 +52,4 @@ public interface MemberService {
     }
 
     void updateMemberGrade(MemberDTO memberDTO);
-
 }

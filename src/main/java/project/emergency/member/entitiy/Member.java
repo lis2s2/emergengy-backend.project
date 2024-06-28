@@ -18,6 +18,7 @@ public class Member extends BaseEntity {
     @Column(length = 20, nullable = false)
     String memId;
 
+    // 암호화 시에 문자 길이가 길어지기에 길이 넉넉하게 설정
     @Column(length = 100, nullable = false)
     String memPwd;
 

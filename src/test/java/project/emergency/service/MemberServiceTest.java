@@ -44,8 +44,13 @@ public class MemberServiceTest {
     }
 
     @Test
-    public void 회원단건조회() {
-        MemberDTO dto = service.read("user1");
+    public void 회원아이디단건조회() {
+        MemberDTO dto = service.readId("user1");
+        System.out.println(dto);
+    }
+
+    public void 회원이메일단건조회() {
+        MemberDTO dto = service.readEmail("user1@naver.com");
         System.out.println(dto);
     }
 }
