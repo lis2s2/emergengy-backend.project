@@ -44,6 +44,11 @@ public class MemberServiceImp implements MemberService {
 //        if (getDtoId != null || getDtoEmail != null) {
 //            return false;
 //        }
+        if (dto.getMemId() == null || dto.getMemPwd() == null || dto.getMemName() == null ||
+                dto.getMemEmail() == null || dto.getMemNick() == null) {
+            return false;
+        }
+
         // 아이디나 이메일 중복 시 false 반환
         if (repository.existsById(dto.getMemId()) || repository.existsByMemEmail(dto.getMemEmail())) {
             return false;

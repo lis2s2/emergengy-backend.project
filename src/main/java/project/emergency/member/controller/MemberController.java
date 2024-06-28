@@ -31,6 +31,9 @@ public class MemberController {
     // 로그인
     @PostMapping("/login")
     public ResponseEntity<Boolean> login(@RequestBody MemberDTO dto) {
+        if (dto.getMemId() == null || dto.getMemPwd() == null) {
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST); // 400 오류 코드 반환
+        }
         boolean result = service.login(dto);
         return result ? new ResponseEntity<>(true, HttpStatus.OK) // 200 성공 코드와 로그인 정보 반환
                 : new ResponseEntity<>(false, HttpStatus.UNAUTHORIZED);
@@ -44,14 +47,14 @@ public class MemberController {
     }
 
     //   @GetMapping: 요청 url에 대한 GET 요청을 메소드와 mapping시키는 것
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<MemberDTO> readId(@PathVariable String id) {
         MemberDTO dto = service.readId(id);
         return dto != null ? new ResponseEntity<>(dto, HttpStatus.OK) // 200 성공 코드와 회원 정보 반환,
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/{email}")
+    @GetMapping("/email/{email}")
     public ResponseEntity<MemberDTO> readEmail(@PathVariable String email) {
         MemberDTO dto = service.readEmail(email);
         return dto != null ? new ResponseEntity<>(dto, HttpStatus.OK) // 200 성공 코드와 회원 정보 반환
