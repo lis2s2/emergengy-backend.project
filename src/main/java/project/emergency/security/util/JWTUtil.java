@@ -19,7 +19,7 @@ public class JWTUtil {
     private String secretKey = "zerock12345678";
 
     // 토큰 유효기간: 1month
-    private long expire = 60 * 24* 30;
+    private long expire = 60 * 24 * 30;
 
     // 로그아웃된 토큰 리스트
     private Set<String> blacklist = new HashSet<>();
@@ -35,23 +35,23 @@ public class JWTUtil {
     }
 
     // 토큰을 생성하는 메소드
-    public String generateToken(String content) throws Exception{
+    public String generateToken(String content) throws Exception {
 
         return Jwts.builder()
-                    .setIssuedAt(new Date())
-                    .setExpiration(Date.from(ZonedDateTime.now().plusMinutes(expire).toInstant()))
-                    .claim("sub", content)
-                    .signWith(SignatureAlgorithm.HS256, secretKey.getBytes("UTF-8"))
-                    .compact();
+                .setIssuedAt(new Date())
+                .setExpiration(Date.from(ZonedDateTime.now().plusMinutes(expire).toInstant()))
+                .claim("sub", content)
+                .signWith(SignatureAlgorithm.HS256, secretKey.getBytes("UTF-8"))
+                .compact();
     }
 
     // 토큰에서 아이디를 추출하는 메소드
-    public String validateAndExtract(String tokenStr)throws Exception {
+    public String validateAndExtract(String tokenStr) throws Exception {
 
         String contentValue = null;
 
-        for(String token : blacklist) {
-            if(token.equals(tokenStr)) {
+        for (String token : blacklist) {
+            if (token.equals(tokenStr)) {
                 log.info("해당 토큰을 사용할 수 없습니다..");
                 return "";
             }
@@ -72,8 +72,7 @@ public class JWTUtil {
             contentValue = claims.getSubject();
 
 
-
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             log.error(e.getMessage());
             contentValue = null;
