@@ -2,11 +2,11 @@
 입니다.
 
 # Dependencies 추가
-Lombok
-Spring Web
-Spring Data JPA
-MariaDB Driver
-Spring Security
+Lombok,
+Spring Web,
+Spring Data JPA,
+MariaDB Driver,
+Spring Security,
 OAuth2 Client 이건 소셜 로그인 시에 필요
 
 

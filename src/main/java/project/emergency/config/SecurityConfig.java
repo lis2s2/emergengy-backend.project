@@ -24,6 +24,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import project.emergency.member.service.MemberService;
+import project.emergency.member.service.MemberServiceImp;
 import project.emergency.security.filter.ApiCheckFilter;
 import project.emergency.security.filter.ApiLoginFilter;
 import project.emergency.security.service.UserDetailsServiceImpl;
@@ -54,18 +56,23 @@ public class SecurityConfig {
         return new JWTUtil();
     }
 
+    // 사용자 관리 서비스
+    @Bean
+    public MemberService memberService() {
+        return new MemberServiceImp();
+    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         // 1.인증 필터 등록: /member 또는 /board 요청이 들어오면 사용자 인증 실행
-        String[] arr = {"/member/*", "/freeboard/*", "/helpboard/*", "/shop/*", "/order/*", "/register/*", "/mypage/*", "/login/*", "/search/*", "/freecomment/*", "/helpcomment/*"};
+        String[] arr = {"/member/*", "/freeboard/*", "/helpboard/*", "/shop/*", "/order/*", "/register/*", "/mypage/*", "/login/*", "/search/*", "/freecomment/*", "/helpcomment/*", "/logout"};
         http.addFilterBefore(new ApiCheckFilter(arr, jwtUtil(), customUserDetailsService()), UsernamePasswordAuthenticationFilter.class);
 
         // 2.권한 설정: 회원등록-아무나, 게시물-user, 회원-admin
         http
                 .authorizeHttpRequests()
-                .requestMatchers("/register", "/api/login").permitAll()
-                .requestMatchers("/login").permitAll()
+                .requestMatchers("/register", "/login", "/logout").permitAll()
                 .requestMatchers("/freeboard/*").hasAnyRole("USER", "ADMIN")
                 .requestMatchers("/helpboard/*").hasAnyRole("USER", "ADMIN")
                 .requestMatchers("/shop/*").hasAnyRole("USER", "ADMIN")
@@ -100,7 +107,7 @@ public class SecurityConfig {
         http.authenticationManager(authenticationManager);
 
         // 로그인 필터 생성: /api/login 요청이 들어오면 필터 실행
-        ApiLoginFilter apiLoginFilter = new ApiLoginFilter("/api/login", jwtUtil());
+        ApiLoginFilter apiLoginFilter = new ApiLoginFilter("/login", jwtUtil(), memberService());
         apiLoginFilter.setAuthenticationManager(authenticationManager);
 
         // Username~Filter: 사용자 이름과 비밀번호를 사용하는 시큐리티의 기본 필터

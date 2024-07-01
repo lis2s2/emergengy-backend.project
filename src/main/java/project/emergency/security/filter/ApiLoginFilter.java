@@ -1,5 +1,8 @@
 package project.emergency.security.filter;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,10 +13,15 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import project.emergency.member.dto.MemberDTO;
+import project.emergency.member.service.MemberService;
 import project.emergency.security.dto.CustomUser;
 import project.emergency.security.util.JWTUtil;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
 
 /*
  * 로그인 요청이 들어오면 아이디와 패스워드를 확인하고 jwt토큰을 발급하는 필터
@@ -23,10 +31,13 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
 
     private JWTUtil jwtUtil;
 
-    public ApiLoginFilter(String defaultFilterProcessesUrl, JWTUtil jwtUtil) {
+    private MemberService memberService;
+
+    public ApiLoginFilter(String defaultFilterProcessesUrl, JWTUtil jwtUtil, MemberService memberService) {
 
         super(defaultFilterProcessesUrl);
         this.jwtUtil = jwtUtil;
+        this.memberService = memberService;
     }
 
     // 로그인 요청이 들어오면 아이디와 패스워드를 확인해서 인증하기
@@ -55,15 +66,36 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
 
         log.info(authResult.getPrincipal());
 
-        //email address
-        String email = ((CustomUser)authResult.getPrincipal()).getUsername();
+        log.info(authResult.getPrincipal());
+
+        String id = ((CustomUser)authResult.getPrincipal()).getUsername();
 
         String token = null;
-        try {
-            token = jwtUtil.generateToken(email);
 
-            response.setContentType("text/plain");
-            response.getOutputStream().write(token.getBytes());
+        try {
+            //토큰 발급
+            token = jwtUtil.generateToken(id);
+            log.info(token);
+
+            //사용자 정보 꺼내기
+            MemberDTO member = memberService.readId(id);
+
+            //결과 데이터 만들기
+            HashMap<String, Object> data = new HashMap<>();
+            data.put("token", token.getBytes("UTF-8"));
+            data.put("user", member);
+
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+
+            // 객체 -> json문자열 변환
+            ObjectMapper objectMapper = new ObjectMapper()
+                    .registerModule(new JavaTimeModule())
+                    .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+                    .setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+
+            PrintWriter out = response.getWriter();
+            out.print(objectMapper.writeValueAsString(data));
 
             log.info(token);
 

@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Service
+//@Service SecurityConfig에서 MemberService를 빈으로 등록했으면 중복 등록되므로 @Service 사용X
 public class MemberServiceImp implements MemberService {
 
     @Autowired
