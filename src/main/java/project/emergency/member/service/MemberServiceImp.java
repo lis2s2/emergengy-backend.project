@@ -27,8 +27,8 @@ public class MemberServiceImp implements MemberService {
         List<Member> entityList = repository.findAll();
 
         List<MemberDTO> dtoList = entityList.stream()
-                                            .map(entity -> entityToDto(entity))
-                                            .collect(Collectors.toList());
+                .map(entity -> entityToDto(entity))
+                .collect(Collectors.toList());
 
         return dtoList;
     }
@@ -44,8 +44,7 @@ public class MemberServiceImp implements MemberService {
 //        if (getDtoId != null || getDtoEmail != null) {
 //            return false;
 //        }
-        if (dto.getMemId() == null || dto.getMemPwd() == null || dto.getMemName() == null ||
-                dto.getMemEmail() == null || dto.getMemNick() == null) {
+        if (dto.getMemId() == null || dto.getMemPwd() == null || dto.getMemName() == null || dto.getMemEmail() == null) {
             return false;
         }
 
@@ -90,8 +89,7 @@ public class MemberServiceImp implements MemberService {
         if (result.isPresent()) {
             Member member = result.get();
             return entityToDto(member);
-        }
-        else {
+        } else {
             return null;
         }
     }
@@ -102,8 +100,7 @@ public class MemberServiceImp implements MemberService {
         if (result.isPresent()) {
             Member member = result.get();
             return entityToDto(member);
-        }
-        else {
+        } else {
             return null;
         }
     }

@@ -21,7 +21,7 @@ public class MemberServiceTest {
                 .memPwd("1234")
                 .memEmail("user1@naver.com")
                 .memName("유저1")
-                .memNick("똥쟁이")
+//                .memNick("똥쟁이")
 //                .memGrade("Regular") // Regular 또는 Gold
                 .memRole("Role_USER")
                 .memPoint(30000)

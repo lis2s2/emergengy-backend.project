@@ -20,7 +20,7 @@ public class MemberDTO {
 
     String memName; // 이름
 
-    String memNick; // 닉네임
+//    String memNick; // 닉네임
 
     String memGrade; // 등급
 

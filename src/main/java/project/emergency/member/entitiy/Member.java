@@ -28,8 +28,8 @@ public class Member extends BaseEntity {
     @Column(length = 20, nullable = false)
     String memName;
 
-    @Column(length = 20, nullable = false)
-    String memNick;
+//    @Column(length = 20, nullable = false)
+//    String memNick;
 
     @Column(length = 20, nullable = false)
     String memGrade;
