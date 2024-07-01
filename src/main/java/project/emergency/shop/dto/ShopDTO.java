@@ -13,6 +13,8 @@ public class ShopDTO {
     int no;
     String title;
     int price;
-    String imgPath;
+    String imgpath;
+    String detailImgpath;
+    String category;
 
 }

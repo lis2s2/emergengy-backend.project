@@ -31,4 +31,10 @@ public class ShopController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
+    @GetMapping("/category")
+    public ResponseEntity<List<ShopDTO>> getByCategory(@RequestParam(name = "category") String category) {
+        List<ShopDTO> list = service.getByCategory(category);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
 }

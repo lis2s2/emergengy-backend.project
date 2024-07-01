@@ -20,20 +20,28 @@ public class ShopServiceImpl implements ShopService{
         List<Shop> entityList = repository.findAll();
 
         return entityList.stream()
-                .map(this::entityTODto).toList();
+                .map(this::entityToDto).toList();
     }
 
     @Override
     public ShopDTO read(int no) {
-        //Optional<Shop> result = repository.findById(no);
-        //if (result.isPresent()) {
-        //    Shop shop = result.get();
-        //    return entityTODto(shop);
-        //}
-        //return null;
-        Shop shop = repository.findById(no)
-                .orElse(null);
-        return shop == null ? null : entityTODto(shop);
+        Optional<Shop> result = repository.findById(no);
+        if (result.isPresent()) {
+            Shop shop = result.get();
+            return entityToDto(shop);
+        }
+        return null;
+//        Shop shop = repository.findById(no)
+//                .orElse(null);
+//        return shop == null ? null : entityTODto(shop);
     }
+
+    @Override
+    public List<ShopDTO> getByCategory(String category) {
+        List<Shop> entityList = repository.findByProdCategory(category);
+        return entityList.stream()
+                .map(this::entityToDto).toList();
+    }
+
 
 }

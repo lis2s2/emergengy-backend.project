@@ -64,20 +64,21 @@ public class SecurityConfig {
         // 2.권한 설정: 회원등록-아무나, 게시물-user, 회원-admin
         http
                 .authorizeHttpRequests()
-                .requestMatchers("/register", "/api/login").permitAll()
-                .requestMatchers("/login").permitAll()
-                .requestMatchers("/freeboard/*").hasAnyRole("USER", "ADMIN")
-                .requestMatchers("/helpboard/*").hasAnyRole("USER", "ADMIN")
-                .requestMatchers("/shop/*").hasAnyRole("USER", "ADMIN")
-                .requestMatchers("/order/*").hasAnyRole("USER", "ADMIN")
-                .requestMatchers("/register/*").hasAnyRole("USER", "ADMIN")
-                .requestMatchers("/mypage/*").hasAnyRole("USER", "ADMIN")
-                .requestMatchers("/login/*").hasAnyRole("USER", "ADMIN")
-                .requestMatchers("/search/*").hasAnyRole("USER", "ADMIN")
-                .requestMatchers("/freecomment/*").hasAnyRole("USER", "ADMIN")
-                .requestMatchers("/helpcomment/*").hasAnyRole("USER", "ADMIN")
-                .requestMatchers("/member/*").hasRole("ADMIN") // 회원 관리는 관리자이면 접근 가능
-                .anyRequest().authenticated()
+                .requestMatchers("/**").permitAll()
+//                .requestMatchers("/register", "/api/login").permitAll()
+//                .requestMatchers("/login").permitAll()
+//                .requestMatchers("/freeboard/*").hasAnyRole("USER", "ADMIN")
+//                .requestMatchers("/helpboard/*").hasAnyRole("USER", "ADMIN")
+//                .requestMatchers("/shop/*").hasAnyRole("USER", "ADMIN")
+//                .requestMatchers("/order/*").hasAnyRole("USER", "ADMIN")
+//                .requestMatchers("/register/*").hasAnyRole("USER", "ADMIN")
+//                .requestMatchers("/mypage/*").hasAnyRole("USER", "ADMIN")
+//                .requestMatchers("/login/*").hasAnyRole("USER", "ADMIN")
+//                .requestMatchers("/search/*").hasAnyRole("USER", "ADMIN")
+//                .requestMatchers("/freecomment/*").hasAnyRole("USER", "ADMIN")
+//                .requestMatchers("/helpcomment/*").hasAnyRole("USER", "ADMIN")
+//                .requestMatchers("/member/*").hasRole("ADMIN") // 회원 관리는 관리자이면 접근 가능
+//                .anyRequest().authenticated()
 
                 .and()
                 .csrf().disable() //csrf 비활성화
