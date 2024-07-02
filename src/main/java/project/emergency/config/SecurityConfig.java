@@ -1,9 +1,15 @@
 package project.emergency.config;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -15,9 +21,15 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
+import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import jakarta.servlet.ServletException;
@@ -36,7 +48,14 @@ import project.emergency.security.util.JWTUtil;
  */
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+    //  SecurityConfig 클래스에서 clientRegistrationRepository 빈을 주입 받도록 함
+    private final ClientRegistrationRepository clientRegistrationRepository;
+
+    private final DefaultOAuth2UserService oAuth2UserService;
+//    private final OAuth2UserService oAuth2UserService;
 
     // 인증서비스
     @Bean
@@ -72,14 +91,14 @@ public class SecurityConfig {
         // 2.권한 설정: 회원등록-아무나, 게시물-user, 회원-admin
         http
                 .authorizeHttpRequests()
-                .requestMatchers("/register", "/login", "/logout").permitAll()
+                .requestMatchers("/register", "/login/*", "/logout", "/login/oauth2/**", "/api/*").permitAll()
                 .requestMatchers("/freeboard/*").hasAnyRole("USER", "ADMIN")
                 .requestMatchers("/helpboard/*").hasAnyRole("USER", "ADMIN")
                 .requestMatchers("/shop/*").hasAnyRole("USER", "ADMIN")
                 .requestMatchers("/order/*").hasAnyRole("USER", "ADMIN")
                 .requestMatchers("/register/*").hasAnyRole("USER", "ADMIN")
                 .requestMatchers("/mypage/*").hasAnyRole("USER", "ADMIN")
-                .requestMatchers("/login/*").hasAnyRole("USER", "ADMIN")
+//                .requestMatchers("/login/*").hasAnyRole("USER", "ADMIN")
                 .requestMatchers("/search/*").hasAnyRole("USER", "ADMIN")
                 .requestMatchers("/freecomment/*").hasAnyRole("USER", "ADMIN")
                 .requestMatchers("/helpcomment/*").hasAnyRole("USER", "ADMIN")
@@ -87,6 +106,17 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
 
                 .and()
+                // 카카오톡
+                .oauth2Login(oauth2 -> oauth2
+                        .redirectionEndpoint(endpoint -> endpoint.baseUri("/login/*"))
+                        .userInfoEndpoint(endpoint -> endpoint.userService(oAuth2UserService))
+                ) // oauth2
+//                .oauth2Login(oauth2Configurer -> oauth2Configurer
+//                        .loginPage("/login")
+//                        .successHandler(successHandler())
+//                        .userInfoEndpoint()
+//                        .userService(oAuth2UserService))
+
                 .csrf().disable() //csrf 비활성화
                 //토큰을 사용하니까 세션은 사용안함
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -159,6 +189,25 @@ public class SecurityConfig {
             }
         };
         return handler;
+    }
+
+    @Bean
+    public AuthenticationSuccessHandler successHandler() {
+        return ((request, response, authentication) -> {
+            DefaultOAuth2User defaultOAuth2User = (DefaultOAuth2User) authentication.getPrincipal();
+
+            String id = defaultOAuth2User.getAttributes().get("id").toString();
+            String body = """
+                    {"id":"%s"}
+                    """.formatted(id);
+
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+
+            PrintWriter writer = response.getWriter();
+            writer.println(body);
+            writer.flush();
+        });
     }
 
     @Bean
