@@ -31,9 +31,6 @@ public class ShopServiceImpl implements ShopService{
             return entityToDto(shop);
         }
         return null;
-//        Shop shop = repository.findById(no)
-//                .orElse(null);
-//        return shop == null ? null : entityTODto(shop);
     }
 
     @Override
