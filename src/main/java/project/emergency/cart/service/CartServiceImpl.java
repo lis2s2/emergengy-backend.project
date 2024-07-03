@@ -1,5 +1,6 @@
 package project.emergency.cart.service;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.emergency.cart.dto.CartDTO;
@@ -9,6 +10,7 @@ import project.emergency.shop.entity.Shop;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CartServiceImpl implements CartService{
@@ -43,5 +45,24 @@ public class CartServiceImpl implements CartService{
 
         return entityList.stream()
                 .map(this::entityToDto).toList();
+    }
+
+    @Override
+    public void updateCartCount(int cartNo, int prodCount) {
+        Cart cart = repository.findById(cartNo)
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 장바구니 번호입니다"));
+
+        cart.setProdCount(prodCount);
+        repository.save(cart);
+    }
+
+    @Transactional
+    @Override
+    public void deleteCart(int cartNo) {
+        Cart cart = repository.findById(cartNo)
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 장바구니 번호입니다"));
+
+        cart.setDeleted(true); // isDeleted 값을 true로 변경
+        repository.save(cart);
     }
 }

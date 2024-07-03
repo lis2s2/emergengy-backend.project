@@ -18,4 +18,5 @@ public class CartDTO {
     int prodPrice;
     String prodImgpath;
     String prodTitle;
+    boolean isDeleted;
 }
