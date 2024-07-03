@@ -17,10 +17,10 @@ public class MemberServiceTest {
     @Test
     public void 회원등록() {
         MemberDTO dto = MemberDTO.builder()
-                .memId("user6")
-                .memPwd("1234")
-                .memEmail("user1@naver.com")
-                .memName("유저1")
+                .memId("lees6895@naver.com")
+                .memPwd("kgkg1237")
+                .memEmail("lees6895@naver.com")
+                .memName("이수현")
 //                .memNick("똥쟁이")
 //                .memGrade("Regular") // Regular 또는 Gold
                 .memRole("Role_USER")

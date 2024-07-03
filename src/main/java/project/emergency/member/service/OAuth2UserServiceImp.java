@@ -20,10 +20,9 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-//@AllArgsConstructor
 @RequiredArgsConstructor
 public class OAuth2UserServiceImp extends DefaultOAuth2UserService {
-
+// PrincipalOauth2UserService
     private final MemberRepository memberRepository;
 
     @Override
@@ -32,17 +31,6 @@ public class OAuth2UserServiceImp extends DefaultOAuth2UserService {
         OAuth2User oAuth2User = super.loadUser(request);
 
         String oauthClientName = request.getClientRegistration().getClientName();
-
-//        // Role generate
-//        List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList("ROLE_USER");
-//
-//        // nameAttributeKey
-//        String userNameAttributeName = request.getClientRegistration()
-//                .getProviderDetails()
-//                .getUserInfoEndpoint()
-//                .getUserNameAttributeName();
-//
-//        return new DefaultOAuth2User(authorities, oAuth2User.getAttributes(), userNameAttributeName);
 
         try {
             System.out.println(new ObjectMapper().writeValueAsString(oAuth2User.getAttributes()));

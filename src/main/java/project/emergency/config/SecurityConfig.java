@@ -2,7 +2,9 @@ package project.emergency.config;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
+import java.security.SecureRandom;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Configurable;
@@ -13,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -43,11 +46,11 @@ import project.emergency.security.filter.ApiLoginFilter;
 import project.emergency.security.service.UserDetailsServiceImpl;
 import project.emergency.security.util.JWTUtil;
 
-/*
- * 스프링 시큐리티 설정 클래스
- */
 @Configuration
+// 스프링 시큐리티 필터(SecurityConfig)가 스프링 필터체인에 등록
 @EnableWebSecurity
+//secured 어노테이션 활성화, preAuthorize, postAuthorize 어노테이션 활성화
+@EnableMethodSecurity(securedEnabled = true, prePostEnabled = true)
 @RequiredArgsConstructor
 public class SecurityConfig {
 
@@ -56,6 +59,7 @@ public class SecurityConfig {
 
     private final DefaultOAuth2UserService oAuth2UserService;
 //    private final OAuth2UserService oAuth2UserService;
+//    private final UserDetailsServiceImpl userDetailsService;
 
     // 인증서비스
     @Bean
@@ -91,6 +95,7 @@ public class SecurityConfig {
         // 2.권한 설정: 회원등록-아무나, 게시물-user, 회원-admin
         http
                 .authorizeHttpRequests()
+                .requestMatchers("/**").permitAll()
                 .requestMatchers("/register", "/login/*", "/logout", "/login/oauth2/**", "/api/*").permitAll()
                 .requestMatchers("/freeboard/*").hasAnyRole("USER", "ADMIN")
                 .requestMatchers("/helpboard/*").hasAnyRole("USER", "ADMIN")
@@ -105,17 +110,14 @@ public class SecurityConfig {
                 .requestMatchers("/member/*").hasRole("ADMIN") // 회원 관리는 관리자이면 접근 가능
                 .anyRequest().authenticated()
 
+
                 .and()
                 // 카카오톡
+                // oauth2
                 .oauth2Login(oauth2 -> oauth2
-                        .redirectionEndpoint(endpoint -> endpoint.baseUri("/login/*"))
+                        .redirectionEndpoint(endpoint -> endpoint.baseUri("/login/oauth2/**"))
                         .userInfoEndpoint(endpoint -> endpoint.userService(oAuth2UserService))
-                ) // oauth2
-//                .oauth2Login(oauth2Configurer -> oauth2Configurer
-//                        .loginPage("/login")
-//                        .successHandler(successHandler())
-//                        .userInfoEndpoint()
-//                        .userService(oAuth2UserService))
+                )
 
                 .csrf().disable() //csrf 비활성화
                 //토큰을 사용하니까 세션은 사용안함
@@ -237,3 +239,6 @@ public class SecurityConfig {
         return handler;
     }
 }
+/*
+ * 스프링 시큐리티 설정 클래스
+ */
