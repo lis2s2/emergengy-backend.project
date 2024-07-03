@@ -19,14 +19,33 @@ public class ReviewController {
     @PostMapping("/register")
     public ResponseEntity<Boolean> register(@RequestBody ReviewDTO dto) {
         service.register(dto);
-        return new ResponseEntity<>(true, HttpStatus.CREATED); //201성공코드와 처리결과 반환
+        return new ResponseEntity<>(true, HttpStatus.CREATED);
     }
 
-    //localhost:8080/review?no=1
-    @GetMapping("/detail")
-    public ResponseEntity<List<ReviewDTO>> read(@RequestParam(name = "no") String no) {
+    //localhost:8080/review/list/byToiletNo?no=1
+    @GetMapping("/list/byToiletNo")
+    public ResponseEntity<List<ReviewDTO>> readByToiletNo(@RequestParam(name = "no") String no) {
         List<ReviewDTO> list = service.getByToiletNo(no);
-        return new ResponseEntity<>(list, HttpStatus.OK); //200성공코드와 게시물정보를 반환한다
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
+    //localhost:8080/review/list/byWriter?writer=1
+    @GetMapping("/list/byWriter")
+    public ResponseEntity<List<ReviewDTO>> readByWriter(@RequestParam(name = "writer") String writer) {
+        List<ReviewDTO> list = service.getByWriter(writer);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+    //localhost:8080/review/score?no=1
+    @GetMapping("/score")
+    public ResponseEntity<Double> readAvgScore(@RequestParam(name = "no") String no) {
+        double score = service.getToiletAvgScore(no);
+        return new ResponseEntity<>(score, HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ReviewDTO>> searchShops() {
+        List<ReviewDTO> list = service.getList();
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
 }
