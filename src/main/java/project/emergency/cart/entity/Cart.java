@@ -20,13 +20,13 @@ public class Cart extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int cartNo;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "prod_no")
-    Shop Shop;
+    Shop shop;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mem_id")
-    Member Member;
+    Member member;
 
     @Column(nullable = false)
     int prodCount;

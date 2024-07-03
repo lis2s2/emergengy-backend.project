@@ -12,7 +12,10 @@ import project.emergency.shop.entity.Shop;
 @ToString
 public class CartDTO {
     int no;
-    Shop prodNo;
-    Member memberId;
+    int prodNo;
+    String memberId;
     int prodCount;
+    int prodPrice;
+    String prodImgpath;
+    String prodTitle;
 }
