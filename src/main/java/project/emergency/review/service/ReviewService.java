@@ -9,7 +9,7 @@ import java.util.List;
 public interface ReviewService {
 
 
-    List<ReviewDTO> getByToiletNo(String toiletNo); // 카테고리별 아이템 목록 조회
+    List<ReviewDTO> getByToiletNo(String toiletNo);
     void register(ReviewDTO dto);
     List<ReviewDTO> getList();
     List<ReviewDTO> getByWriter(String writer);
@@ -23,7 +23,7 @@ public interface ReviewService {
                 .reviewScore(dto.getReviewScore())
                 .writer(member)
                 .reviewContent(dto.getReviewContent())
-                .isDeleted(dto.isDeleted())
+                .isDeleted(dto.getIsDeleted())
                 .build();
     }
 
@@ -37,7 +37,7 @@ public interface ReviewService {
                 .reviewContent(entity.getReviewContent())
                 .regDate(entity.getRegDate())
                 .modDate(entity.getModDate())
-                .isDeleted(entity.isDeleted())
+                .isDeleted(entity.getIsDeleted())
                 .build();
     }
 }

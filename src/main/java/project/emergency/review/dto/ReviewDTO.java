@@ -19,6 +19,6 @@ public class ReviewDTO {
     int reviewScore;
     LocalDateTime regDate;
     LocalDateTime modDate;
-    boolean isDeleted;
+    Boolean isDeleted;
 
 }

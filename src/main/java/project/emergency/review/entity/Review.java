@@ -31,7 +31,7 @@ public class Review extends BaseEntity {
     @Column(length = 10, nullable = false)
     int reviewScore;
 
-    @Column(length = 10)
-    boolean isDeleted;
+    @Column
+    Boolean isDeleted;
 
 }
