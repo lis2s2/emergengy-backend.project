@@ -23,7 +23,7 @@ public class MemberServiceTest {
                 .memName("유저")
 //                .memNick("똥쟁이")
 //                .memGrade("Regular") // Regular 또는 Gold
-                .memRole("Role_USER")
+                .memRole("Role_USER") 
                 .memPoint(30000)
                 .build();
 
