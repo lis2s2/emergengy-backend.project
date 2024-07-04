@@ -3,7 +3,6 @@ package project.emergency.cart.service;
 import project.emergency.cart.dto.CartDTO;
 import project.emergency.cart.entity.Cart;
 import project.emergency.member.entitiy.Member;
-import project.emergency.shop.dto.ShopDTO;
 import project.emergency.shop.entity.Shop;
 
 import java.util.List;
@@ -15,7 +14,7 @@ public interface CartService {
 
     void updateCart(Cart cart, int count);
 
-    List<CartDTO> getList();
+    List<CartDTO> getList(String memberId);
 
     void updateCartCount(int cartNo, int prodCount);
 

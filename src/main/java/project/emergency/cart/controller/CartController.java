@@ -20,8 +20,8 @@ public class CartController {
 
     // 장바구니 목록 조회
     @GetMapping
-    public ResponseEntity<List<CartDTO>> serchCartlist() {
-        List<CartDTO> list = service.getList();
+    public ResponseEntity<List<CartDTO>> serchCartlist(@RequestParam(name = "id") String id) {
+        List<CartDTO> list = service.getList(id);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 

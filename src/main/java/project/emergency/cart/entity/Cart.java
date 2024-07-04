@@ -23,12 +23,12 @@ public class Cart extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int cartNo;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "prod_no")
     Shop shop;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "mem_id")
+    @ManyToOne
+//    @JoinColumn(name = "mem_id")
     Member member;
 
     @Column(nullable = false)

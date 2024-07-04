@@ -6,11 +6,9 @@ import org.springframework.stereotype.Service;
 import project.emergency.cart.dto.CartDTO;
 import project.emergency.cart.entity.Cart;
 import project.emergency.cart.repository.CartRepository;
-import project.emergency.shop.entity.Shop;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class CartServiceImpl implements CartService{
@@ -40,8 +38,8 @@ public class CartServiceImpl implements CartService{
     }
 
     @Override
-    public List<CartDTO> getList() {
-        List<Cart> entityList = repository.findAll();
+    public List<CartDTO> getList(String memberId) {
+        List<Cart> entityList = repository.findByMemberId(memberId);
 
         return entityList.stream()
                 .map(this::entityToDto).toList();
