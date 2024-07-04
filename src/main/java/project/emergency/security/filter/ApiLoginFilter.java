@@ -104,7 +104,6 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
             // JWT 토큰 생성 및 응답 헤더에 추가
             response.setHeader("Authorization", "Bearer " + token);
 
-
         } catch (Exception e) {
             e.printStackTrace();
         }

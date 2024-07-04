@@ -10,4 +10,5 @@ public interface MemberRepository extends JpaRepository<Member, String> {
     // 엔티티 변수명이랑 동일하게 함수명도 적어야 함
     boolean existsByMemEmail(String memEmail);
     Optional<Member> findByMemEmail(String memEmail);
+    Optional<Member> findByMemIdAndMemNameAndMemEmail(String memId, String memName, String memEmail);
 }

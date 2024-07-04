@@ -39,10 +39,4 @@ public class Member extends BaseEntity {
 
     @Column(nullable = true)
     int memPoint;
-
-    @Column
-    private String provider;
-
-    @Column
-    private String providerId;
 }

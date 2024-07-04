@@ -1,9 +1,7 @@
 package project.emergency.member.service;
 
-import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 import project.emergency.member.dto.MemberDTO;
 import project.emergency.member.entitiy.Member;
 import project.emergency.member.repository.MemberRepository;
@@ -103,6 +101,12 @@ public class MemberServiceImp implements MemberService {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public String findpwd(MemberDTO dto) {
+        Optional<Member> result = repository.findByMemIdAndMemNameAndMemEmail(dto.getMemId(), dto.getMemName(), dto.getMemEmail());
+        return result.map(Member::getMemPwd).orElse(null);
     }
 
     // 아이디 중복 확인 메서드

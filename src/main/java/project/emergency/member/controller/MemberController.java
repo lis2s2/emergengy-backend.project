@@ -1,7 +1,10 @@
 package project.emergency.member.controller;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.http.*;
+import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +33,7 @@ public class MemberController {
     }
 
     // 로그인
+    // 나중에 포스트매핑 하지 않아도 /login을 시큐리티콘피그에서 낚아채는 거 해보기!
     @PostMapping("/login")
     public ResponseEntity<Boolean> login(@RequestBody MemberDTO dto) {
         if (dto.getMemId() == null || dto.getMemPwd() == null) {
@@ -40,70 +44,12 @@ public class MemberController {
                 : new ResponseEntity<>(false, HttpStatus.UNAUTHORIZED);
     }
 
-//    @GetMapping("/auth/oauth2/code/kakao")
-//    public String loginByKakao(@RequestParam final String code) {
-//
-//        System.out.println("code = " + code);
-//
-//        // 1. header 생성
-//        HttpHeaders httpHeaders = new HttpHeaders();
-//        httpHeaders.add(HttpHeaders.CONTENT_TYPE, "application/x-www-form-urlencoded;charset=utf-8");
-//
-//        // 2. body 생성
-//        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-//        params.add("grant_type", "authorization_code"); //고정값
-//        params.add("client_id", "REST_API_KEY 입력");
-//        params.add("redirect_uri", "http://localhost:3000/oauth2/code/kakao"); //등록한 redirect uri
-//        params.add("code", code);
-//
-//        // 3. header + body
-//        HttpEntity<MultiValueMap<String, String>> httpEntity = new HttpEntity<>(params, httpHeaders);
-//
-//        // 4. http 요청하기
-//        RestTemplate restTemplate = new RestTemplate();
-//        ResponseEntity<Object> response = restTemplate.exchange(
-//                "https://kauth.kakao.com/oauth/token",
-//                HttpMethod.POST,
-//                httpEntity,
-//                Object.class
-//        );
-//
-//        System.out.println("response = " + response);
-//
-//        return "ok";
-//    }
-
-//    @GetMapping("/login/oauth2/code/kakao?code={code}" )
-//    public String getAccessToken(@RequestParam("code") String code) {
-//        System.out.println("code = " + code);
-//
-//        // 1. header 생성
-//        HttpHeaders httpHeaders = new HttpHeaders();
-//        httpHeaders.add(HttpHeaders.CONTENT_TYPE, "application/x-www-form-urlencoded;charset=utf-8");
-//
-//        // 2. body 생성
-//        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-//        params.add("grant_type", "authorization_code"); //고정값
-//        params.add("client_id", "REST_API_KEY 입력");
-//        params.add("redirect_uri", "http://localhost:3000/oauth2/code/kakao"); //등록한 redirect uri
-//        params.add("code", code);
-//
-//        // 3. header + body
-//        HttpEntity<MultiValueMap<String, String>> httpEntity = new HttpEntity<>(params, httpHeaders);
-//
-//        // 4. http 요청하기
-//        RestTemplate restTemplate = new RestTemplate();
-//        ResponseEntity<Object> response = restTemplate.exchange(
-//                "https://kauth.kakao.com/oauth/token",
-//                HttpMethod.POST,
-//                httpEntity,
-//                Object.class
-//        );
-//
-//        System.out.println("response = " + response);
-//
-//        return "home";
-//    }
+    @PostMapping("/find")
+    public ResponseEntity<String> findPassword(@RequestBody MemberDTO dto) {
+        String password = service.findpwd(dto);
+        return password != null ? new ResponseEntity<>(password, HttpStatus.OK)
+                : new ResponseEntity<>("사용자를 찾을 수 없습니다.", HttpStatus.NOT_FOUND);
+    }
 
     // 회원 목록
     @GetMapping("/member/list")
@@ -112,7 +58,7 @@ public class MemberController {
         return new ResponseEntity<>(list, HttpStatus.OK); // 200성공코드와 회원목록 반환
     }
 
-    //   @GetMapping: 요청 url에 대한 GET 요청을 메소드와 mapping시키는 것
+    //  @GetMapping: 요청 url에 대한 GET 요청을 메소드와 mapping시키는 것
     @GetMapping("/id/{id}")
     public ResponseEntity<MemberDTO> readId(@PathVariable String id) {
         MemberDTO dto = service.readId(id);
@@ -127,10 +73,3 @@ public class MemberController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
-
-//    @GetMapping("/read") // 주소수정
-//    public void read(@RequestParam(name = "id") String id, @RequestParam(name = "page", defaultValue = "0") int page, Model model) { //파라미터 추가
-//        MemberDTO dto = service.read(id);
-//        model.addAttribute("dto", dto);
-//        model.addAttribute("page", page);
-//    }

@@ -17,7 +17,7 @@ public interface MemberService {
 
     MemberDTO readEmail(String email); // 회원 이메일 단건 조회
 
-//    MemberDTO readKakao(String userId, String email);
+    String findpwd(MemberDTO dto); // 비밀번호 찾기
 
     // 엔티티를 DTO로 변환하는 메소드
     default MemberDTO entityToDto(Member entity) {
