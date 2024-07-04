@@ -7,9 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import project.emergency.member.entitiy.Member;
 import project.emergency.shop.dto.ShopDTO;
 import project.emergency.shop.service.ShopService;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -36,5 +38,6 @@ public class ShopController {
         List<ShopDTO> list = service.getByCategory(category);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
+
 
 }
