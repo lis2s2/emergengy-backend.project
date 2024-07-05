@@ -162,6 +162,7 @@ public class SecurityConfig {
         return handler;
     }
 
+
     @Bean
     public LogoutSuccessHandler logoutSuccessHandler() {
 
