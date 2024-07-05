@@ -63,7 +63,6 @@ public class MemberServiceTest {
 
     @Test
     public void 회원정보수정() {
-
         MemberDTO dto = service.readEmail("hyeon6895@gmail");
         dto.setMemEmail("hyeon6895@gmail.com");
         service.modify(dto);
