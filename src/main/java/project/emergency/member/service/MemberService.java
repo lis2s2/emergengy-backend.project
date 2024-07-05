@@ -11,15 +11,24 @@ public interface MemberService {
 
     boolean register(MemberDTO dto); // 회원 등록
 
+    boolean checkIdExists(String memId);
+
+    boolean checkEmailExists(String memEmail);
+
     boolean login(MemberDTO dto); // 로그인
 
     MemberDTO readId(String id); // 회원 아이디 단건 조회
 
     MemberDTO readEmail(String email); // 회원 이메일 단건 조회
 
-    String findpwd(MemberDTO dto); // 비밀번호 찾기
+    String  findid(String name, String mail); // 아이디 찾기
 
-    // 엔티티를 DTO로 변환하는 메소드
+//    String findpwd(String id, String name, String mail); // 비밀번호 찾기
+
+    MemberDTO readPwd(String pwd);
+
+    void modify(MemberDTO dto);
+
     default MemberDTO entityToDto(Member entity) {
         MemberDTO dto = MemberDTO.builder()
                 .memId(entity.getMemId())
@@ -37,7 +46,6 @@ public interface MemberService {
         return dto;
     }
 
-    //DTO를 엔티티로 변환하는 메소드
     default Member dtoToEntity(MemberDTO dto) {
         Member entity = Member.builder()
                 .memId(dto.getMemId())

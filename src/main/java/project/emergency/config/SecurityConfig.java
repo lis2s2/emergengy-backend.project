@@ -89,24 +89,28 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         // 1.인증 필터 등록: /member 또는 /board 요청이 들어오면 사용자 인증 실행
-        String[] arr = {"/member/*", "/freeboard/*", "/helpboard/*", "/shop/*", "/order/*", "/register/*", "/mypage/*", "/login/*", "/search/*", "/freecomment/*", "/helpcomment/*", "/logout"};
+        String[] arr = {"/member/*", "/freeboard/*", "/helpboard/*", "/shop/*", "/order/*", "/mypage/*", "/search/*", "/freecomment/*", "/helpcomment/*", "/logout"};
         http.addFilterBefore(new ApiCheckFilter(arr, jwtUtil(), customUserDetailsService()), UsernamePasswordAuthenticationFilter.class);
 
         // 2.권한 설정: 회원등록-아무나, 게시물-user, 회원-admin
         http
                 .authorizeHttpRequests()
                 .requestMatchers("/**").permitAll()
-                .requestMatchers("/register", "/login/*", "/logout", "/login/oauth2/**", "/api/*").permitAll()
-                .requestMatchers("/freeboard/*").hasAnyRole("USER", "ADMIN")
-                .requestMatchers("/helpboard/*").hasAnyRole("USER", "ADMIN")
-                .requestMatchers("/shop/*").hasAnyRole("USER", "ADMIN")
-                .requestMatchers("/order/*").hasAnyRole("USER", "ADMIN")
-                .requestMatchers("/register/*").hasAnyRole("USER", "ADMIN")
-                .requestMatchers("/mypage/*").hasAnyRole("USER", "ADMIN")
+                .requestMatchers(
+                        "/register", "/login/*", "/logout", "/login/oauth2/**", "/api/*",
+                        "/freeboard/*", "/helpboard/*", "/shop/*", "/order/*", "/register/**",
+                        "/mypage/*", "/search/*", "/freecomment/*", "/helpcomment/*"
+                        ).permitAll()
+//                .requestMatchers("/freeboard/*").hasAnyRole("USER", "ADMIN")
+//                .requestMatchers("/helpboard/*").hasAnyRole("USER", "ADMIN")
+//                .requestMatchers("/shop/*").hasAnyRole("USER", "ADMIN")
+//                .requestMatchers("/order/*").hasAnyRole("USER", "ADMIN")
+//                .requestMatchers("/register/*").hasAnyRole("USER", "ADMIN")
+//                .requestMatchers("/mypage/*").hasAnyRole("USER", "ADMIN")
 //                .requestMatchers("/login/*").hasAnyRole("USER", "ADMIN")
-                .requestMatchers("/search/*").hasAnyRole("USER", "ADMIN")
-                .requestMatchers("/freecomment/*").hasAnyRole("USER", "ADMIN")
-                .requestMatchers("/helpcomment/*").hasAnyRole("USER", "ADMIN")
+//                .requestMatchers("/search/*").hasAnyRole("USER", "ADMIN")
+//                .requestMatchers("/freecomment/*").hasAnyRole("USER", "ADMIN")
+//                .requestMatchers("/helpcomment/*").hasAnyRole("USER", "ADMIN")
                 .requestMatchers("/member/*").hasRole("ADMIN") // 회원 관리는 관리자이면 접근 가능
                 .anyRequest().authenticated()
 

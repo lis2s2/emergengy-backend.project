@@ -9,13 +9,14 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import project.emergency.member.dto.MemberDTO;
 import project.emergency.member.service.MemberService;
 
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
 public class MemberController {
 
     @Autowired
@@ -32,6 +33,22 @@ public class MemberController {
         return new ResponseEntity<>(result, HttpStatus.CREATED); //201성공코드와 처리결과 반환
     }
 
+    // 아이디 중복 체크
+    @GetMapping("/register/checkid")
+    public ResponseEntity<Boolean> checkId(@RequestParam(name = "name") String memId) {
+        boolean exists = service.checkIdExists(memId);
+        System.out.println(exists);
+        return new ResponseEntity<>(exists, HttpStatus.OK);
+    }
+
+    // 이메일 중복 체크
+    @GetMapping("/register/checkemail")
+    public ResponseEntity<Boolean> checkEmail(@RequestParam(name = "name") String memEmail) {
+        boolean exists = service.checkEmailExists(memEmail);
+        System.out.println(exists);
+        return new ResponseEntity<>(exists, HttpStatus.OK);
+    }
+
     // 로그인
     // 나중에 포스트매핑 하지 않아도 /login을 시큐리티콘피그에서 낚아채는 거 해보기!
     @PostMapping("/login")
@@ -44,12 +61,39 @@ public class MemberController {
                 : new ResponseEntity<>(false, HttpStatus.UNAUTHORIZED);
     }
 
-    @PostMapping("/find")
+    // 아이디 찾기
+    @PostMapping("/find/id")
     public ResponseEntity<String> findPassword(@RequestBody MemberDTO dto) {
-        String password = service.findpwd(dto);
+        String password = service.findid(dto.getMemName(), dto.getMemEmail());
         return password != null ? new ResponseEntity<>(password, HttpStatus.OK)
                 : new ResponseEntity<>("사용자를 찾을 수 없습니다.", HttpStatus.NOT_FOUND);
     }
+
+    // 수정
+    @GetMapping("/modify")
+    public void modify(@RequestParam(name = "name") String memId, String memEmail, String memPwd, Model model) {
+        MemberDTO iddto = service.readId(memId);
+        MemberDTO maildto = service.readEmail(memEmail);
+        MemberDTO pwddto = service.readPwd(memPwd);
+
+        model.addAttribute("iddto", iddto);
+        model.addAttribute("maildto", maildto);
+        model.addAttribute("pwddto", pwddto);
+    }
+
+    @PostMapping("/modify")
+    public void modifyPost(MemberDTO dto, RedirectAttributes redirectAttributes) {
+
+        service.modify(dto);
+    }
+
+    // 비밀번호 찾기
+//    @PostMapping("/find/password")
+//    public ResponseEntity<String> findPassword(@RequestBody MemberDTO dto) {
+//        String password = service.findpwd(dto.getMemId(), dto.getMemName(), dto.getMemEmail());
+//        return password != null ? new ResponseEntity<>(password, HttpStatus.OK)
+//                : new ResponseEntity<>("사용자를 찾을 수 없습니다.", HttpStatus.NOT_FOUND);
+//    }
 
     // 회원 목록
     @GetMapping("/member/list")
@@ -72,4 +116,5 @@ public class MemberController {
         return dto != null ? new ResponseEntity<>(dto, HttpStatus.OK) // 200 성공 코드와 회원 정보 반환
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
 }

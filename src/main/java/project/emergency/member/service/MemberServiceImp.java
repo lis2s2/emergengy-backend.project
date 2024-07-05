@@ -71,6 +71,22 @@ public class MemberServiceImp implements MemberService {
     }
 
     @Override
+    public boolean checkIdExists(String memId) {
+        Optional<Member> checkId = repository.findById(memId);
+        if (checkId.isPresent()) {
+            return false;
+        } return true;
+    }
+
+    @Override
+    public boolean checkEmailExists(String memEmail) {
+        Optional<Member> checkEmail = repository.findByMemEmail(memEmail);
+        if (checkEmail.isPresent()) {
+            return false;
+        } return true;
+    }
+
+    @Override
     public boolean login(MemberDTO dto) {
         Optional<Member> idOpt = repository.findById(dto.getMemId());
 
@@ -83,18 +99,20 @@ public class MemberServiceImp implements MemberService {
 
     @Override
     public MemberDTO readId(String id) {
+//        Optional<Member> result = repository.findById(id);
+//        if (result.isPresent()) {
+//            Member member = result.get();
+//            return entityToDto(member);
+//        } else {
+//            return null;
+//        }
         Optional<Member> result = repository.findById(id);
-        if (result.isPresent()) {
-            Member member = result.get();
-            return entityToDto(member);
-        } else {
-            return null;
-        }
+        return result.map(this::entityToDto).orElse(null);
     }
 
     @Override
     public MemberDTO readEmail(String email) {
-        Optional<Member> result = repository.findById(email);
+        Optional<Member> result = repository.findByMemEmail(email);
         if (result.isPresent()) {
             Member member = result.get();
             return entityToDto(member);
@@ -104,20 +122,48 @@ public class MemberServiceImp implements MemberService {
     }
 
     @Override
-    public String findpwd(MemberDTO dto) {
-        Optional<Member> result = repository.findByMemIdAndMemNameAndMemEmail(dto.getMemId(), dto.getMemName(), dto.getMemEmail());
-        return result.map(Member::getMemPwd).orElse(null);
+    public String findid(String memName, String memEmail) {
+        return repository.findId(memName, memEmail);
     }
 
-    // 아이디 중복 확인 메서드
-    private boolean isIdDuplicate(String memId) {
-        return repository.findById(memId).isPresent();
+    @Override
+    public MemberDTO readPwd(String pwd) {
+        Optional<Member> result = repository.findByMemPwd(pwd);
+        if (result.isPresent()) {
+            Member member = result.get();
+            return entityToDto(member);
+        } else {
+            return null;
+        }
     }
 
-    // 이메일 중복 확인 메서드
-    private boolean isEmailDuplicate(String memEmail) {
-        return repository.findByMemEmail(memEmail).isPresent();
+    @Override
+    public void modify(MemberDTO dto) {
+
+        Optional<Member> result = repository.findById(dto.getMemId());
+
+        if (result.isPresent()) {
+            Member entity = result.get();
+            entity.setMemName(dto.getMemName());
+            entity.setMemEmail(dto.getMemEmail());
+            entity.setMemPwd(dto.getMemPwd());
+
+            repository.save(entity);
+        }
     }
+
+    // 비밀번호 찾는 메소드
+//     1.
+//        @Override
+//        public String findpwd(String memId, String memName, String memEmail) {
+//            return repository.findPassword(memId, memName, memEmail);
+//        }
+//    2.
+//    @Override
+//    public String findpwd(MemberDTO dto) {
+//        Optional<Member> pwd = repository.findByMemIdAndMemNameAndMemEmail(dto.getMemId(), dto.getMemName(), dto.getMemEmail());
+//        return pwd.map(Member::getMemPwd).orElse(null);
+//    }
 
     // 멤버 등급 업데이트 메서드
     @Override
@@ -125,5 +171,7 @@ public class MemberServiceImp implements MemberService {
 
         memberDTO.updateGrade();
     }
-
 }
+
+
+

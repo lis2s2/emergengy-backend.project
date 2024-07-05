@@ -49,8 +49,24 @@ public class MemberServiceTest {
         System.out.println(dto);
     }
 
+    @Test
     public void 회원이메일단건조회() {
         MemberDTO dto = service.readEmail("user1@naver.com");
+        System.out.println(dto);
+    }
+
+    @Test
+    public void 아이디찾기() {
+        String dto = service.findid("이수현", "hyeon6895@naver.com");
+        System.out.println(dto);
+    }
+
+    @Test
+    public void 회원정보수정() {
+
+        MemberDTO dto = service.readEmail("hyeon6895@gmail");
+        dto.setMemEmail("hyeon6895@gmail.com");
+        service.modify(dto);
         System.out.println(dto);
     }
 }
