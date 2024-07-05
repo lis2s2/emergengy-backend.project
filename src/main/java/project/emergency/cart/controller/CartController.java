@@ -45,4 +45,10 @@ public class CartController {
         service.updateCartCount(cartNo, prodCount);
         return ResponseEntity.ok("장바구니 상품 수량이 성공적으로 업데이트되었습니다");
     }
+
+    // 장바구니 수량 세기
+    @GetMapping("/count")
+    public long getCartCount(@RequestParam String memberMemId) {
+        return service.getCartCountForUser(memberMemId);
+    }
 }

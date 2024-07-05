@@ -63,4 +63,9 @@ public class CartServiceImpl implements CartService{
         cart.setDeleted(true); // isDeleted 값을 true로 변경
         repository.save(cart);
     }
+
+    @Override
+    public long getCartCountForUser(String memberMemId) {
+        return repository.countByMemIdAndIsDeletedFalse(memberMemId);
+    }
 }
