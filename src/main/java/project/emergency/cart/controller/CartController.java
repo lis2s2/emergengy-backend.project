@@ -51,4 +51,11 @@ public class CartController {
     public long getCartCount(@RequestParam String memberMemId) {
         return service.getCartCountForUser(memberMemId);
     }
+
+    // 장바구니 전체 삭제(회원별)
+    @PutMapping("/deleteAll")
+    public ResponseEntity<String> deleteAllCart(@RequestParam String memberMemId) {
+        service.deleteAllCart(memberMemId);
+        return ResponseEntity.ok("회원의 장바구니가 모두 삭제되었습니다");
+    }
 }

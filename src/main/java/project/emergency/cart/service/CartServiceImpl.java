@@ -65,6 +65,16 @@ public class CartServiceImpl implements CartService{
     }
 
     @Override
+    public void deleteAllCart(String memberMemId) {
+        List<Cart> cartList = repository.findByMemberId(memberMemId);
+        cartList.forEach(cart -> {
+            cart.setDeleted(true); // isDeleted 값을 true로 변경
+            repository.save(cart);
+        });
+    }
+
+
+    @Override
     public long getCartCountForUser(String memberMemId) {
         return repository.countByMemIdAndIsDeletedFalse(memberMemId);
     }

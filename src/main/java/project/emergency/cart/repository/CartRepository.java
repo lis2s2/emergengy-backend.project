@@ -18,6 +18,7 @@ public interface CartRepository  extends JpaRepository<Cart, Integer> {
     @Query("SELECT c FROM Cart c WHERE c.member.memId = :memberId")
     List<Cart> findByMemberId(@Param("memberId") String memberId);
 
-    @Query("SELECT COUNT(c) FROM Cart c WHERE c.member.memId = :memberMemId AND c.isDeleted = false")
+    @Query("SELECT COUNT(c.cartNo) FROM Cart c WHERE c.member.memId = :memberMemId AND c.isDeleted = false")
     long countByMemIdAndIsDeletedFalse(@Param("memberMemId") String memberMemId);
+
 }
