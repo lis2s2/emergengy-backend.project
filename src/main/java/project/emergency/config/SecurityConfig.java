@@ -89,7 +89,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         // 1.인증 필터 등록: /member 또는 /board 요청이 들어오면 사용자 인증 실행
-        String[] arr = {"/member/*", "/freeboard/*", "/helpboard/*", "/shop/*", "/order/*", "/mypage/*", "/search/*", "/freecomment/*", "/helpcomment/*", "/logout"};
+        String[] arr = {"/member/*", "/freeboard/*", "/helpboard/*", "/shop/*", "/order/*", "/search/*", "/freecomment/*", "/helpcomment/*", "/logout"};
         http.addFilterBefore(new ApiCheckFilter(arr, jwtUtil(), customUserDetailsService()), UsernamePasswordAuthenticationFilter.class);
 
         // 2.권한 설정: 회원등록-아무나, 게시물-user, 회원-admin
@@ -99,7 +99,7 @@ public class SecurityConfig {
                 .requestMatchers(
                         "/register", "/login/*", "/logout", "/login/oauth2/**", "/api/*",
                         "/freeboard/*", "/helpboard/*", "/shop/*", "/order/*", "/register/**",
-                        "/mypage/*", "/search/*", "/freecomment/*", "/helpcomment/*"
+                        "/mypage/**", "/search/*", "/freecomment/*", "/helpcomment/*"
                         ).permitAll()
 //                .requestMatchers("/freeboard/*").hasAnyRole("USER", "ADMIN")
 //                .requestMatchers("/helpboard/*").hasAnyRole("USER", "ADMIN")

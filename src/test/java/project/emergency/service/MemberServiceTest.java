@@ -63,9 +63,9 @@ public class MemberServiceTest {
 
     @Test
     public void 회원정보수정() {
-        MemberDTO dto = service.readEmail("hyeon6895@gmail");
-        dto.setMemEmail("hyeon6895@gmail.com");
-        service.modify(dto);
+        MemberDTO dto = service.readEmail("hyeon1221@naver.com");
+        dto.setMemEmail("hyeon0000@naver.com");
+        service.modifyMember(dto.getMemId(), dto.getMemEmail(), dto.getMemPwd());
         System.out.println(dto);
     }
 }

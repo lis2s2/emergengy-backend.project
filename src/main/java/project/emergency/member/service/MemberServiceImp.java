@@ -2,6 +2,7 @@ package project.emergency.member.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 import project.emergency.member.dto.MemberDTO;
 import project.emergency.member.entitiy.Member;
 import project.emergency.member.repository.MemberRepository;
@@ -137,20 +138,54 @@ public class MemberServiceImp implements MemberService {
         }
     }
 
+    @Transactional(readOnly = false)
     @Override
-    public void modify(MemberDTO dto) {
+    public boolean modifyMember(String memId, String memEmail, String memPwd) {
 
-        Optional<Member> result = repository.findById(dto.getMemId());
+        Optional<Member> result = repository.findById(memId);
 
         if (result.isPresent()) {
-            Member entity = result.get();
-            entity.setMemName(dto.getMemName());
-            entity.setMemEmail(dto.getMemEmail());
-            entity.setMemPwd(dto.getMemPwd());
+            Member member = result.get();
+            boolean modified = false;
 
-            repository.save(entity);
+            if (memEmail != null && !memEmail.isEmpty() && !memEmail.equals(member.getMemEmail())) {
+                member.setMemEmail(memEmail);
+                modified = true;
+            }
+
+            if (memPwd != null && !memPwd.isEmpty()) {
+                member.setMemPwd(passwordEncoder.encode(memPwd));
+                modified = true;
+            }
+
+            if (modified) {
+                repository.save(member);
+                return true;
+            }
         }
+        return false;
     }
+
+    @Override
+    public void updateMemberGrade(MemberDTO memberDTO) {
+
+    }
+}
+
+//    @Transactional(readOnly = false)
+//    @Override
+//    public void modify(MemberDTO dto) {
+//
+//        Optional<Member> result = repository.findById(dto.getMemId());
+//
+//        if (result.isPresent()) {
+//            Member entity = result.get();
+//            entity.setMemEmail(dto.getMemEmail());
+//            entity.setMemPwd(dto.getMemPwd());
+//
+//            repository.save(entity);
+//        }
+//    }
 
     // 비밀번호 찾는 메소드
 //     1.
@@ -165,13 +200,6 @@ public class MemberServiceImp implements MemberService {
 //        return pwd.map(Member::getMemPwd).orElse(null);
 //    }
 
-    // 멤버 등급 업데이트 메서드
-    @Override
-    public void updateMemberGrade(MemberDTO memberDTO) {
-
-        memberDTO.updateGrade();
-    }
-}
 
 
 

@@ -1,5 +1,6 @@
 package project.emergency.member.controller;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
@@ -10,8 +11,11 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import project.emergency.config.SecurityConfig;
 import project.emergency.member.dto.MemberDTO;
+import project.emergency.member.entitiy.Member;
 import project.emergency.member.service.MemberService;
+import project.emergency.security.util.JWTUtil;
 
 import java.util.List;
 
@@ -70,21 +74,15 @@ public class MemberController {
     }
 
     // 수정
-    @GetMapping("/modify")
-    public void modify(@RequestParam(name = "name") String memId, String memEmail, String memPwd, Model model) {
-        MemberDTO iddto = service.readId(memId);
-        MemberDTO maildto = service.readEmail(memEmail);
-        MemberDTO pwddto = service.readPwd(memPwd);
+    @PutMapping("/mypage/modify")
+    public ResponseEntity<Boolean> modify (@RequestBody MemberDTO dto) {
+//    public ResponseEntity<Boolean> modify (@RequestParam(name = "id") String memId) {
+//    public ResponseEntity<Boolean> modify (@RequestParam(name = "id") String memId, @RequestParam(name = "email") String memEmail, @RequestParam(name = "pw") String memPwd) {
 
-        model.addAttribute("iddto", iddto);
-        model.addAttribute("maildto", maildto);
-        model.addAttribute("pwddto", pwddto);
-    }
+        boolean result = service.modifyMember(dto.getMemId(),dto.getMemEmail(), dto.getMemPwd());
+//        boolean result = service.modifyMember(memId, memEmail, memPwd);
 
-    @PostMapping("/modify")
-    public void modifyPost(MemberDTO dto, RedirectAttributes redirectAttributes) {
-
-        service.modify(dto);
+        return new ResponseEntity<>(result, result? HttpStatus.OK : HttpStatus.BAD_REQUEST);
     }
 
     // 비밀번호 찾기
