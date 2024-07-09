@@ -5,6 +5,8 @@ import lombok.*;
 import project.emergency.base.entity.BaseEntity;
 import project.emergency.member.entitiy.Member;
 
+import java.util.List;
+
 @Entity
 @Table(name = "tbl_order")
 @Getter
@@ -15,22 +17,43 @@ import project.emergency.member.entitiy.Member;
 @Builder
 public class Order extends BaseEntity {
 
+    // 주문번호0
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int orderNo;
 
+    // 멤버id
     @ManyToOne
     Member customer;
 
+    // 사용한 포인트
     @Column(nullable = false)
     int usedPoint;
 
+    // 총 결제금액
     @Column(nullable = false)
-    int totalPoint;
+    int totalAmount;
 
+    // 수령인
+    @Column(length = 50, nullable = false)
+    String customerName;
+
+    // 주소
     @Column(length = 200, nullable = false)
     String address;
 
+    // 연락처
     @Column(length = 50, nullable = false)
-    String phone;
+    String phoneNum;
+
+    // 상세주소
+    @Column(length = 100, nullable = false)
+    String detailedAddress;
+
+    // 우편번호
+    @Column(length = 6, nullable = false)
+    String postalCode;
+
+
+
 }
