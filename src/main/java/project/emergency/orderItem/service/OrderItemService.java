@@ -8,9 +8,11 @@ import project.emergency.shop.entity.Shop;
 
 import java.util.List;
 
-@Service
+
 public interface OrderItemService {
-    // 주문번호에 따른 모든 주문 항목 조회
+
+    OrderItemDTO saveOrderItem(OrderItemDTO orderItemDTO);
+
     List<OrderItem> findByOrderNo_OrderNo(int orderNo);
 
     default OrderItem dtoToEntity(OrderItemDTO dto) {
@@ -19,8 +21,23 @@ public interface OrderItemService {
 
         return OrderItem.builder()
                 .orderItemNo(dto.getOrderItemNo())
-                .productNo(shop)
-
+                .shop(shop)
+                .order(order)
+                .count(dto.getCount())
+                .productPrice(shop.getProdPrice())
                 .build();
+
+    }
+
+    default OrderItemDTO entityToDto(OrderItem entity) {
+
+         return OrderItemDTO.builder()
+                 .orderItemNo(entity.getOrderItemNo())
+                 .orderNo(entity.getOrder().getOrderNo())
+                 .productNo(entity.getShop().getProdNo())
+                 .count(entity.getCount())
+                 .productPrice(entity.getShop().getProdPrice())
+                 .totalPrice(entity.getCount() * entity.getShop().getProdPrice())
+                 .build();
     }
 }

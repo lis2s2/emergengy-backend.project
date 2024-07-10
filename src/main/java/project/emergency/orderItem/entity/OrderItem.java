@@ -22,19 +22,19 @@ public class OrderItem {
 
     // 주문번호(받아오기)
     @ManyToOne
-    @Column(nullable = false)
-    Order orderNo;
+    @JoinColumn( nullable = false)
+    Order order;
 
     // 상품
     @ManyToOne
-    @Column(nullable = false)
-    Shop productNo;
+    @JoinColumn( nullable = false)
+    Shop shop;
 
     // 상품주문수량
     @Column(nullable = false)
     int count;
 
-    // 상품가격
+    // 상품 총 가격
     @Column(nullable = false)
     int productPrice;
 

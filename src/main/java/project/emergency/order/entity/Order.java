@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import project.emergency.base.entity.BaseEntity;
 import project.emergency.member.entitiy.Member;
+import project.emergency.orderItem.entity.OrderItem;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ import java.util.List;
 @Builder
 public class Order extends BaseEntity {
 
-    // 주문번호0
+    // 주문번호
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int orderNo;
@@ -31,6 +32,7 @@ public class Order extends BaseEntity {
     int usedPoint;
 
     // 총 결제금액
+    // for문 돌려서 ( count * price )
     @Column(nullable = false)
     int totalAmount;
 
@@ -54,6 +56,7 @@ public class Order extends BaseEntity {
     @Column(length = 6, nullable = false)
     String postalCode;
 
-
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<OrderItem> orderItems;
 
 }
