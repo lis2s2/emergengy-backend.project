@@ -22,7 +22,7 @@ public class MemberServiceTest {
                 .memEmail("lees6895@naver.com")
                 .memName("이수현")
 //                .memNick("똥쟁이")
-//                .memGrade("Regular") // Regular 또는 Gold
+                .memGrade("Regular") // Regular 또는 Gold
                 .memRole("Role_USER")
                 .memPoint(30000)
                 .build();

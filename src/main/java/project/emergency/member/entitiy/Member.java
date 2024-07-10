@@ -15,7 +15,8 @@ import project.emergency.base.entity.BaseEntity;
 public class Member extends BaseEntity {
 
     @Id
-    @Column(length = 20, nullable = false)
+    // 소셜 로그인 시에 문자 길이가 길어지기에 길이 넉넉하게 설정
+    @Column(length = 100, nullable = false)
     String memId;
 
     // 암호화 시에 문자 길이가 길어지기에 길이 넉넉하게 설정
@@ -27,6 +28,12 @@ public class Member extends BaseEntity {
 
     @Column(length = 20, nullable = false)
     String memName;
+
+    @Column
+    String provider;
+
+    @Column
+    String providerId;
 
 //    @Column(length = 20, nullable = false)
 //    String memNick;

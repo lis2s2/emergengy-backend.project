@@ -47,9 +47,9 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
             throws AuthenticationException, IOException, ServletException {
 
         //바디에서 사용자 정보 꺼내기
-        String body = getBody(request);
-        ObjectMapper objectMapper = new ObjectMapper();
-        HashMap<String, String> map = objectMapper.readValue(body, HashMap.class);
+//        String body = getBody(request);
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        HashMap<String, String> map = objectMapper.readValue(body, HashMap.class);
 
         String id = request.getParameter("id");
         String pw = request.getParameter("pw");

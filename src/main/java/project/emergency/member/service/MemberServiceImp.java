@@ -34,28 +34,25 @@ public class MemberServiceImp implements MemberService {
 
     @Override
     public boolean register(MemberDTO dto) {
-//        String id = dto.getMemId();
-//        MemberDTO getDtoId = readId(id);
-//
-//        String email = dto.getMemEmail();
-//        MemberDTO getDtoEmail = readEmail(email);
-//
-//        if (getDtoId != null || getDtoEmail != null) {
-//            return false;
-//        }
+
         if (dto.getMemId() == null || dto.getMemPwd() == null || dto.getMemName() == null || dto.getMemEmail() == null) {
+
             return false;
         }
 
         // 아이디나 이메일 중복 시 false 반환
         if (repository.existsById(dto.getMemId()) || repository.existsByMemEmail(dto.getMemEmail())) {
+
             return false;
         }
 
         Member entity = dtoToEntity(dto);
 
+        // 기본 사이트 설정
+        entity.setProvider("나지금급해");
+
         // 기본 등급 설정
-        entity.setMemGrade("Regular");
+        entity.setMemGrade("FAMILY");
 
         // 기본 포인트 설정
         entity.setMemPoint(0);
@@ -74,17 +71,21 @@ public class MemberServiceImp implements MemberService {
     @Override
     public boolean checkIdExists(String memId) {
         Optional<Member> checkId = repository.findById(memId);
+
         if (checkId.isPresent()) {
             return false;
-        } return true;
+        }
+        return true;
     }
 
     @Override
     public boolean checkEmailExists(String memEmail) {
         Optional<Member> checkEmail = repository.findByMemEmail(memEmail);
+
         if (checkEmail.isPresent()) {
             return false;
-        } return true;
+        }
+        return true;
     }
 
     @Override
@@ -92,7 +93,9 @@ public class MemberServiceImp implements MemberService {
         Optional<Member> idOpt = repository.findById(dto.getMemId());
 
         if (idOpt.isPresent()) {
+
             Member member = idOpt.get();
+
             return passwordEncoder.matches(dto.getMemPwd(), member.getMemPwd());
         }
         return false;
@@ -100,22 +103,21 @@ public class MemberServiceImp implements MemberService {
 
     @Override
     public MemberDTO readId(String id) {
-//        Optional<Member> result = repository.findById(id);
-//        if (result.isPresent()) {
-//            Member member = result.get();
-//            return entityToDto(member);
-//        } else {
-//            return null;
-//        }
+
         Optional<Member> result = repository.findById(id);
+
         return result.map(this::entityToDto).orElse(null);
     }
 
     @Override
     public MemberDTO readEmail(String email) {
+
         Optional<Member> result = repository.findByMemEmail(email);
+
         if (result.isPresent()) {
+
             Member member = result.get();
+
             return entityToDto(member);
         } else {
             return null;
@@ -129,9 +131,13 @@ public class MemberServiceImp implements MemberService {
 
     @Override
     public MemberDTO readPwd(String pwd) {
+
         Optional<Member> result = repository.findByMemPwd(pwd);
+
         if (result.isPresent()) {
+
             Member member = result.get();
+
             return entityToDto(member);
         } else {
             return null;
@@ -145,30 +151,33 @@ public class MemberServiceImp implements MemberService {
         Optional<Member> result = repository.findById(memId);
 
         if (result.isPresent()) {
+
             Member member = result.get();
+
             boolean modified = false;
 
             if (memEmail != null && !memEmail.isEmpty() && !memEmail.equals(member.getMemEmail())) {
+
                 member.setMemEmail(memEmail);
+
                 modified = true;
             }
 
             if (memPwd != null && !memPwd.isEmpty()) {
+
                 member.setMemPwd(passwordEncoder.encode(memPwd));
+
                 modified = true;
             }
 
             if (modified) {
+
                 repository.save(member);
+
                 return true;
             }
         }
         return false;
-    }
-
-    @Override
-    public void updateMemberGrade(MemberDTO memberDTO) {
-
     }
 }
 

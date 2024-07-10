@@ -55,8 +55,8 @@ public class MemberController {
 
     // 로그인
     // 나중에 포스트매핑 하지 않아도 /login을 시큐리티콘피그에서 낚아채는 거 해보기!
-    @PostMapping("/login")
-    public ResponseEntity<Boolean> login(@RequestBody MemberDTO dto) {
+    @PostMapping("/login/**")
+    public ResponseEntity<Boolean> login(@RequestParam MemberDTO dto) {
         if (dto.getMemId() == null || dto.getMemPwd() == null) {
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST); // 400 오류 코드 반환
         }

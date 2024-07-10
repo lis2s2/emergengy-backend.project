@@ -97,11 +97,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers("/**").permitAll()
                 .requestMatchers(
-                        "/register", "/login/*", "/logout", "/login/oauth2/**", "/api/*",
-                        "/freeboard/*", "/helpboard/*", "/shop/*", "/order/*", "/register/**",
-                        "/mypage/**", "/search/*", "/freecomment/*", "/helpcomment/*"
+                        "/register", "/login/*", "/logout", "/login/oauth2/**", "/api/*", "/register/**", "/search/*"
                         ).permitAll()
-//                .requestMatchers("/freeboard/*").hasAnyRole("USER", "ADMIN")
+                .requestMatchers("/order/*", "/mypage/**", "/freecomment/*", "/helpcomment/*", "/shop/*").hasAnyRole("USER", "ADMIN")
 //                .requestMatchers("/helpboard/*").hasAnyRole("USER", "ADMIN")
 //                .requestMatchers("/shop/*").hasAnyRole("USER", "ADMIN")
 //                .requestMatchers("/order/*").hasAnyRole("USER", "ADMIN")
@@ -132,7 +130,6 @@ public class SecurityConfig {
                 .logoutSuccessHandler(logoutSuccessHandler());
 
         // 3.로그인 필터 등록: 로그인 요청이 들어오면 토큰 발급
-
         // 인증매니저 생성
         AuthenticationManagerBuilder authenticationManagerBuilder = http
                 .getSharedObject(AuthenticationManagerBuilder.class);

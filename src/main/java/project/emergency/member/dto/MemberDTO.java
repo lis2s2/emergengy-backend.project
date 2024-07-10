@@ -1,7 +1,9 @@
 package project.emergency.member.dto;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
@@ -19,6 +21,7 @@ public class MemberDTO {
     String memId; // 아이디
 
     @NotBlank(message = "비밀번호를 입력해주세요.")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*\\d)[a-zA-Z\\d]{6,15}$")
     String memPwd; // 패스워드
 
     @NotBlank(message = "이메일을 입력해주세요.")
@@ -28,6 +31,10 @@ public class MemberDTO {
     @NotBlank(message = "이름을 입력해주세요.")
     @Size(min = 2, max = 8, message = "이름을 2~8자 사이로 입력해주세요.")
     String memName; // 이름
+
+    String provider;
+
+    String providerId;
 
 //    String memNick; // 닉네임
 
@@ -51,14 +58,5 @@ public class MemberDTO {
         this.memGrade = getMemGrade();
         this.memRole = getMemRole();
         this.memPoint = getMemPoint();
-    }
-
-    // 등급 업데이트 메소드
-    public void updateGrade() {
-        if (memPoint >= 30000) {
-            setMemGrade("Gold");
-        } else {
-            setMemGrade("Regular");
-        }
     }
 }
