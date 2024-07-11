@@ -28,7 +28,7 @@ public class Toilet extends BaseEntity {
     Double lat;
 
     @Column(length = 20, nullable = false)
-    Double log;
+    Double lng;
 
     @Column(length = 20, nullable = false)
     String toiletName;
@@ -36,7 +36,7 @@ public class Toilet extends BaseEntity {
     @Column(length = 50, nullable = false)
     String toiletAddress;
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 20)
     String detail;
 
     @Column
@@ -48,8 +48,11 @@ public class Toilet extends BaseEntity {
     @Column
     Boolean separated;
 
+    @Column
+    Boolean paper;
+
     @Column(length = 20, nullable = false)
-    String status;
+    String toiletStatus;
 
 
 

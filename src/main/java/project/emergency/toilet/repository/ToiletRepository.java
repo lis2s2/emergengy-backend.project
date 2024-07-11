@@ -12,5 +12,6 @@ public interface ToiletRepository extends JpaRepository<Toilet, String> {
     List<Toilet> findByDisabled(Boolean disabled);
     List<Toilet> findByDiaper(Boolean diaper);
     List<Toilet> findBySeparated(Boolean separated);
+    List<Toilet> findByPaper(Boolean separated);
 
 }
