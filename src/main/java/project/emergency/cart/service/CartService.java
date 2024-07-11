@@ -22,6 +22,8 @@ public interface CartService {
 
     void deleteAllCart(String memberMemId);
 
+    void deleteSelectedItems(List<Integer> selectedItemIds);
+
     long getCartCountForUser(String memberMemId);
 
     default Cart dtoToEntity(CartDTO dto) {

@@ -26,7 +26,8 @@ public class Order extends BaseEntity {
 
     // 멤버id
     @ManyToOne
-    Member customer;
+    @JoinColumn(name = "memId", nullable = false)
+    Member member;
 
     // 사용한 포인트
     @Column(nullable = false)

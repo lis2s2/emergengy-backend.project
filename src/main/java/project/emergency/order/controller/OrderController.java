@@ -1,11 +1,11 @@
 package project.emergency.order.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.emergency.order.dto.OrderDTO;
 import project.emergency.order.service.OrderService;
-
 
 @RestController
 @RequestMapping("/orders")
@@ -20,6 +20,7 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<OrderDTO> createOrder(@RequestBody OrderDTO orderDTO) {
-        return ResponseEntity.ok(orderService.saveOrder(orderDTO));
+        OrderDTO createdOrder = orderService.saveOrder(orderDTO);
+        return new ResponseEntity<>(createdOrder, HttpStatus.CREATED);
     }
 }

@@ -27,14 +27,13 @@ public class OrderItem {
 
     // 상품
     @ManyToOne
-    @JoinColumn( nullable = false)
+    @JoinColumn(name = "prod_no", nullable = false)
     Shop shop;
 
     // 상품주문수량
     @Column(nullable = false)
-    int count;
+    int prodCount;
 
-    // 상품 개별 가격
     @Column(nullable = false)
     int productPrice;
 

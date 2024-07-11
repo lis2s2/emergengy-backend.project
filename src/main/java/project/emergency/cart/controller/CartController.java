@@ -58,4 +58,11 @@ public class CartController {
         service.deleteAllCart(memberMemId);
         return ResponseEntity.ok("회원의 장바구니가 모두 삭제되었습니다");
     }
+
+    // 선택된 장바구니 항목 삭제
+    @PutMapping("/deleteSelected")
+    public ResponseEntity<String> deleteSelectedCartItems(@RequestBody List<Integer> selectedItemIds) {
+        service.deleteSelectedItems(selectedItemIds);
+        return ResponseEntity.ok("선택된 장바구니 항목이 성공적으로 삭제되었습니다");
+    }
 }
