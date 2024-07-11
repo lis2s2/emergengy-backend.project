@@ -22,8 +22,14 @@ public class Shop extends BaseEntity {
     String prodName;
 
     @Column(nullable = false)
-    int prodPoint;
+    int prodPrice;
 
     @Column(length = 200, nullable = false)
-    String imgPath;
+    String prodImgpath;
+
+    @Column(length = 300)
+    String prodDetailimgpath;
+
+    @Column(length = 20, nullable = false)
+    String prodCategory;
 }

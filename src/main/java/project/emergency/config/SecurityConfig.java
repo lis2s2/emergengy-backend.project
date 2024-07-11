@@ -82,16 +82,19 @@ public class SecurityConfig {
 
         // 1.인증 필터 등록: /member 또는 /board 요청이 들어오면 사용자 인증 실행
         String[] arr = {"/member/*", "/freeboard/*", "/helpboard/*", "/shop/*", "/order/*", "/search/*", "/freecomment/*", "/helpcomment/*", "/logout"};
+      
         http.addFilterBefore(new ApiCheckFilter(arr, jwtUtil(), customUserDetailsService()), UsernamePasswordAuthenticationFilter.class);
 
         // 2.권한 설정: 회원등록-아무나, 게시물-user, 회원-admin
         http
                 .authorizeHttpRequests()
                 .requestMatchers("/**").permitAll()
+
                 .requestMatchers(
                         "/register", "/login/*", "/logout", "/login/oauth2/**", "/api/*", "/register/**", "/search/*"
                         ).permitAll()
                 .requestMatchers("/order/*", "/mypage/**", "/freecomment/*", "/helpcomment/*", "/shop/*").hasAnyRole("USER", "ADMIN")
+
 //                .requestMatchers("/helpboard/*").hasAnyRole("USER", "ADMIN")
 //                .requestMatchers("/shop/*").hasAnyRole("USER", "ADMIN")
 //                .requestMatchers("/order/*").hasAnyRole("USER", "ADMIN")
@@ -101,9 +104,8 @@ public class SecurityConfig {
 //                .requestMatchers("/search/*").hasAnyRole("USER", "ADMIN")
 //                .requestMatchers("/freecomment/*").hasAnyRole("USER", "ADMIN")
 //                .requestMatchers("/helpcomment/*").hasAnyRole("USER", "ADMIN")
-                .requestMatchers("/member/*").hasRole("ADMIN") // 회원 관리는 관리자이면 접근 가능
-                .anyRequest().authenticated()
-
+//                .requestMatchers("/member/*").hasRole("ADMIN") // 회원 관리는 관리자이면 접근 가능
+//                .anyRequest().authenticated()
 
                 .and()
                 // oauth2
@@ -184,6 +186,7 @@ public class SecurityConfig {
         };
         return handler;
     }
+
 
     @Bean
     public AuthenticationSuccessHandler successHandler() {
