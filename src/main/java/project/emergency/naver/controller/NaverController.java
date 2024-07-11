@@ -1,7 +1,6 @@
 package project.emergency.naver.controller;
 
 import net.minidev.json.JSONObject;
-import netscape.javascript.JSException;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -11,8 +10,6 @@ import org.springframework.web.client.RestTemplate;
 import project.emergency.member.entitiy.Member;
 import project.emergency.naver.service.NaverUserService;
 
-import java.util.Map;
-
 @RestController
 @RequestMapping("/api/proxy")
 public class NaverController {
@@ -20,9 +17,6 @@ public class NaverController {
     private final RestTemplate restTemplate;
 
     private final NaverUserService naverUserService;
-//    public NaverController(RestTemplate restTemplate) {
-//        this.restTemplate = restTemplate;
-//    }
 
     public NaverController(RestTemplate restTemplate, NaverUserService naverUserService) {
         this.restTemplate = restTemplate;
@@ -39,6 +33,7 @@ public class NaverController {
                             + "&state=" + state;
 
         HttpHeaders headers = new HttpHeaders();
+        // 콘텐트 타입: application/json
         headers.add("Content-Type", "application/json");
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
@@ -62,8 +57,6 @@ public class NaverController {
         ResponseEntity<String> response = restTemplate.exchange(USER_INFO_URL, HttpMethod.GET, entity, String.class);
 
         try {
-//            JSONObject userInfo = new JSONObject((Map<String, ?>) response);
-//            JSONObject responseJson = userInfo;
             String responseBody = response.getBody();
 
             // 응답 본문을 JSONObject로 변환
@@ -87,4 +80,6 @@ public class NaverController {
         }
         return ResponseEntity.ok(response.getBody());
     }
+
+
 }

@@ -7,6 +7,8 @@ public interface NaverUserService {
 
     boolean register(MemberDTO dto);
 
+    Member saveNaverUser(Member member);
+
     default MemberDTO entityToDto(Member entity) {
         MemberDTO dto = MemberDTO.builder()
                 .memId(entity.getMemId())
@@ -42,6 +44,4 @@ public interface NaverUserService {
 
         return entity;
     }
-
-    Member saveNaverUser(Member member);
 }

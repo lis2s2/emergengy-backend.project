@@ -27,8 +27,6 @@ public interface MemberService {
 
     MemberDTO readPwd(String pwd);
 
-//    void modify(MemberDTO dto);
-
     boolean modifyMember(String memId, String memEmail, String memPwd);
 
     default MemberDTO entityToDto(Member entity) {

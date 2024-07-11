@@ -7,6 +7,8 @@ public interface KakaoUserService {
 
     boolean register(MemberDTO dto);
 
+    Member saveKakaoUser(Member member);
+
     default MemberDTO entityToDto(Member entity) {
         MemberDTO dto = MemberDTO.builder()
                 .memId(entity.getMemId())
@@ -42,6 +44,4 @@ public interface KakaoUserService {
 
         return entity;
     }
-
-    Member saveNaverUser(Member member);
 }

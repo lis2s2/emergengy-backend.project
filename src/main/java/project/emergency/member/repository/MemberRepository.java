@@ -19,6 +19,7 @@ public interface MemberRepository extends JpaRepository<Member, String> {
     @Query("SELECT m.memId FROM Member m WHERE m.memName = :memName AND m.memEmail = :memEmail")
     String findId(@Param("memName") String memName, @Param("memEmail") String memEmail); // 아이디 찾는 메소드
 
+    // 비밀번호 찾기 관련 쿼리
 //    Optional<Member> findByMemId( String memName, String memEmail);
 //    Optional<Member> findByMemIdAndMemNameAndMemEmail(String memId, String memName, String memEmail);
 //    @Query("SELECT m.memPwd FROM Member m WHERE m.memId = :memId AND m.memName = :memName AND m.memEmail = :memEmail")

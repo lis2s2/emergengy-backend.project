@@ -181,21 +181,6 @@ public class MemberServiceImp implements MemberService {
     }
 }
 
-//    @Transactional(readOnly = false)
-//    @Override
-//    public void modify(MemberDTO dto) {
-//
-//        Optional<Member> result = repository.findById(dto.getMemId());
-//
-//        if (result.isPresent()) {
-//            Member entity = result.get();
-//            entity.setMemEmail(dto.getMemEmail());
-//            entity.setMemPwd(dto.getMemPwd());
-//
-//            repository.save(entity);
-//        }
-//    }
-
     // 비밀번호 찾는 메소드
 //     1.
 //        @Override
