@@ -34,8 +34,12 @@ public class OrderItem {
     @Column(nullable = false)
     int count;
 
-    // 상품 총 가격
+    // 상품 개별 가격
     @Column(nullable = false)
     int productPrice;
+
+    // 상품 총 가격
+    @Column(nullable = false)
+    int totalPrice;
 
 }

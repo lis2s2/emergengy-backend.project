@@ -6,6 +6,7 @@ import project.emergency.base.entity.BaseEntity;
 import project.emergency.member.entitiy.Member;
 import project.emergency.orderItem.entity.OrderItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -57,6 +58,6 @@ public class Order extends BaseEntity {
     String postalCode;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<OrderItem> orderItems;
+    List<OrderItem> orderItems = new ArrayList<>();
 
 }

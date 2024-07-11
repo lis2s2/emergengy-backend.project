@@ -7,6 +7,7 @@ import project.emergency.order.entity.Order;
 import project.emergency.orderItem.dto.OrderItemDTO;
 import project.emergency.orderItem.entity.OrderItem;
 
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 
@@ -35,26 +36,25 @@ public interface OrderService {
     }
 
     default  OrderDTO entityToDto(Order entity) {
-        int totalAmount = entity.getOrderItems().stream()
-                .mapToInt(item -> item.getProductPrice() * item.getCount())
-                .sum();
+        OrderDTO orderDTO = new OrderDTO();
+        orderDTO.setOrderNo(entity.getOrderNo());
+        orderDTO.setCustomerName(entity.getCustomerName());
+        orderDTO.setAddress(entity.getAddress());
+        orderDTO.setPhoneNum(entity.getPhoneNum());
+        orderDTO.setDetailedAddress(entity.getDetailedAddress());
+        orderDTO.setPostalCode(entity.getPostalCode());
+        orderDTO.setUsedPoint(entity.getUsedPoint());
+        orderDTO.setTotalAmount(entity.getTotalAmount());
 
-        OrderDTO dto = OrderDTO.builder()
-                .orderNo(entity.getOrderNo())
-                .customerId(entity.getCustomer().getMemId())
-                .usedPoint(entity.getUsedPoint())
-                .totalAmount(totalAmount)
-                .customerName(entity.getCustomerName())
-                .address(entity.getAddress())
-                .phoneNum(entity.getPhoneNum())
-                .detailedAddress(entity.getDetailedAddress())
-                .postalCode(entity.getPostalCode())
-                .orderItems(entity.getOrderItems().stream()
-                        .map(this::entityToDto)
-                        .collect(Collectors.toList()))
-                .build();
+        if (entity.getOrderItems() != null) {
+            orderDTO.setOrderItems(entity.getOrderItems().stream()
+                    .map(this::entityToDto)
+                    .collect(Collectors.toList()));
+        } else {
+            orderDTO.setOrderItems(new ArrayList<>());
+        }
 
-        return dto;
+        return orderDTO;
     }
 
     default OrderItemDTO entityToDto(OrderItem entity) {

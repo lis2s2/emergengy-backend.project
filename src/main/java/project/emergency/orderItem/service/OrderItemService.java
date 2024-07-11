@@ -17,6 +17,7 @@ public interface OrderItemService {
 
     default OrderItem dtoToEntity(OrderItemDTO dto) {
         Shop shop = Shop.builder().prodNo(dto.getProductNo()).build();
+        Shop prodPrice = Shop.builder().prodPrice(dto.getProductPrice()).build();
         Order order = Order.builder().orderNo(dto.getOrderNo()).build();
 
         return OrderItem.builder()
@@ -24,7 +25,7 @@ public interface OrderItemService {
                 .shop(shop)
                 .order(order)
                 .count(dto.getCount())
-                .productPrice(shop.getProdPrice())
+                .productPrice(prodPrice.getProdPrice())
                 .build();
 
     }
