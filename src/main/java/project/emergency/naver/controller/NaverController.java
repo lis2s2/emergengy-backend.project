@@ -56,28 +56,6 @@ public class NaverController {
 
         ResponseEntity<String> response = restTemplate.exchange(USER_INFO_URL, HttpMethod.GET, entity, String.class);
 
-        try {
-            String responseBody = response.getBody();
-
-            // 응답 본문을 JSONObject로 변환
-            JSONObject userInfo = new JSONObject();
-            JSONObject responseJson = userInfo;
-
-            Member member = new Member();
-            member.setMemId(responseJson.getAsString("id"));
-            member.setMemEmail(responseJson.getAsString("email"));
-            member.setMemName(responseJson.getAsString("name"));
-            member.setProviderId(responseJson.getAsString("id"));
-            member.setProvider("네이버");
-            member.setMemRole("ROLE_USER");
-            member.setMemGrade("FAMILY");
-            member.setMemPoint(0);
-
-            naverUserService.saveNaverUser(member);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         return ResponseEntity.ok(response.getBody());
     }
 
