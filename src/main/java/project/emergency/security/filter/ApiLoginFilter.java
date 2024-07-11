@@ -18,6 +18,7 @@ import project.emergency.member.service.MemberService;
 import project.emergency.security.dto.CustomUser;
 import project.emergency.security.util.JWTUtil;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -44,6 +45,11 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException, IOException, ServletException {
+
+        //바디에서 사용자 정보 꺼내기
+//        String body = getBody(request);
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        HashMap<String, String> map = objectMapper.readValue(body, HashMap.class);
 
         String id = request.getParameter("id");
         String pw = request.getParameter("pw");
@@ -104,9 +110,35 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
             // JWT 토큰 생성 및 응답 헤더에 추가
             response.setHeader("Authorization", "Bearer " + token);
 
-
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    // 요청 메세지에서 바디 데이터를 꺼내는 메소드
+    public String getBody(HttpServletRequest request) throws IOException {
+        StringBuilder stringBuilder = new StringBuilder();
+        BufferedReader bufferedReader = null;
+
+        try {
+            bufferedReader = request.getReader();
+            char[] charBuffer = new char[128];
+            int bytesRead;
+            while ((bytesRead = bufferedReader.read(charBuffer)) != -1) {
+                stringBuilder.append(charBuffer, 0, bytesRead);
+            }
+        } catch (IOException ex) {
+            throw ex;
+        } finally {
+            if (bufferedReader != null) {
+                try {
+                    bufferedReader.close();
+                } catch (IOException ex) {
+                    throw ex;
+                }
+            }
+        }
+
+        return stringBuilder.toString();
     }
 }
