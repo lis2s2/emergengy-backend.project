@@ -25,11 +25,16 @@ public class MemberController {
         return new ResponseEntity<>(result, HttpStatus.CREATED); //201성공코드와 처리결과 반환
     }
 
+//    @GetMapping("/check-member/{memId}")
+//    public ResponseEntity<Boolean> checkMemberExists(@PathVariable String memId) {
+//        boolean exists = service.checkIdExists(memId);
+//        return new ResponseEntity<>(exists, HttpStatus.OK);
+//    }
+
     // 아이디 중복 체크
     @GetMapping("/register/checkid")
     public ResponseEntity<Boolean> checkId(@RequestParam(name = "name") String memId) {
         boolean exists = service.checkIdExists(memId);
-        System.out.println(exists);
         return new ResponseEntity<>(exists, HttpStatus.OK);
     }
 
@@ -37,7 +42,6 @@ public class MemberController {
     @GetMapping("/register/checkemail")
     public ResponseEntity<Boolean> checkEmail(@RequestParam(name = "name") String memEmail) {
         boolean exists = service.checkEmailExists(memEmail);
-        System.out.println(exists);
         return new ResponseEntity<>(exists, HttpStatus.OK);
     }
 
@@ -55,8 +59,16 @@ public class MemberController {
 
     // 아이디 찾기
     @PostMapping("/find/id")
-    public ResponseEntity<String> findPassword(@RequestBody MemberDTO dto) {
+    public ResponseEntity<String> findId(@RequestBody MemberDTO dto) {
         String password = service.findid(dto.getMemName(), dto.getMemEmail());
+        return password != null ? new ResponseEntity<>(password, HttpStatus.OK)
+                : new ResponseEntity<>("사용자를 찾을 수 없습니다.", HttpStatus.NOT_FOUND);
+    }
+
+    // 비밀번호 찾기
+    @PostMapping("/find/password")
+    public ResponseEntity<String> findPassword(@RequestBody MemberDTO dto) {
+        String password = service.findpwd(dto);
         return password != null ? new ResponseEntity<>(password, HttpStatus.OK)
                 : new ResponseEntity<>("사용자를 찾을 수 없습니다.", HttpStatus.NOT_FOUND);
     }
@@ -76,17 +88,10 @@ public class MemberController {
     // 탈퇴
     @DeleteMapping("/delete-member/{memId}")
     public ResponseEntity<Boolean> deleteMember(@PathVariable String memId) {
+
         boolean result = service.deleteMember(memId);
         return new ResponseEntity<>(result, result ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
-
-    // 비밀번호 찾기
-//    @PostMapping("/find/password")
-//    public ResponseEntity<String> findPassword(@RequestBody MemberDTO dto) {
-//        String password = service.findpwd(dto.getMemId(), dto.getMemName(), dto.getMemEmail());
-//        return password != null ? new ResponseEntity<>(password, HttpStatus.OK)
-//                : new ResponseEntity<>("사용자를 찾을 수 없습니다.", HttpStatus.NOT_FOUND);
-//    }
 
     // 회원 목록
     @GetMapping("/member/list")

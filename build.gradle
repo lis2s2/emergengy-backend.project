@@ -91,6 +91,7 @@ dependencies {
 	implementation 'javax.xml.bind:jaxb-api:2.3.0'
 	implementation 'net.minidev:json-smart:2.4.7'
 	implementation 'org.json:json:20220320'
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
 }
 
 tasks.named('test') {
