@@ -31,9 +31,7 @@ public class MemberDTO {
     @Size(min = 2, max = 8, message = "이름을 2~8자 사이로 입력해주세요.")
     String memName; // 이름
 
-    String provider;
-
-    String providerId;
+//    String provider;
 
 //    String memNick; // 닉네임
 

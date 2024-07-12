@@ -73,6 +73,13 @@ public class MemberController {
         return new ResponseEntity<>(result, result? HttpStatus.OK : HttpStatus.BAD_REQUEST);
     }
 
+    // 탈퇴
+    @DeleteMapping("/delete-member/{memId}")
+    public ResponseEntity<Boolean> deleteMember(@PathVariable String memId) {
+        boolean result = service.deleteMember(memId);
+        return new ResponseEntity<>(result, result ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+    }
+
     // 비밀번호 찾기
 //    @PostMapping("/find/password")
 //    public ResponseEntity<String> findPassword(@RequestBody MemberDTO dto) {

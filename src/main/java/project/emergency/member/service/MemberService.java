@@ -24,10 +24,11 @@ public interface MemberService {
     String  findid(String name, String mail); // 아이디 찾기
 
 //    String findpwd(String id, String name, String mail); // 비밀번호 찾기
-
-    MemberDTO readPwd(String pwd);
+//    MemberDTO readPwd(String pwd);
 
     boolean modifyMember(String memId, String memEmail, String memPwd);
+
+    boolean deleteMember(String memId); // 회원 탈퇴
 
     default MemberDTO entityToDto(Member entity) {
         MemberDTO dto = MemberDTO.builder()

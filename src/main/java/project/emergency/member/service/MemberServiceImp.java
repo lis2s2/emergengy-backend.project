@@ -49,7 +49,7 @@ public class MemberServiceImp implements MemberService {
         Member entity = dtoToEntity(dto);
 
         // 기본 사이트 설정
-        entity.setProvider("나지금급해");
+//        entity.setProvider("나지금급해");
 
         // 기본 등급 설정
         entity.setMemGrade("FAMILY");
@@ -129,20 +129,20 @@ public class MemberServiceImp implements MemberService {
         return repository.findId(memName, memEmail);
     }
 
-    @Override
-    public MemberDTO readPwd(String pwd) {
-
-        Optional<Member> result = repository.findByMemPwd(pwd);
-
-        if (result.isPresent()) {
-
-            Member member = result.get();
-
-            return entityToDto(member);
-        } else {
-            return null;
-        }
-    }
+//    @Override
+//    public MemberDTO readPwd(String pwd) {
+//
+//        Optional<Member> result = repository.findByMemPwd(pwd);
+//
+//        if (result.isPresent()) {
+//
+//            Member member = result.get();
+//
+//            return entityToDto(member);
+//        } else {
+//            return null;
+//        }
+//    }
 
     @Transactional(readOnly = false)
     @Override
@@ -176,6 +176,20 @@ public class MemberServiceImp implements MemberService {
 
                 return true;
             }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteMember(String memId) {
+
+        Optional<Member> result = repository.findById(memId);
+
+        if (result.isPresent()) {
+
+            repository.deleteById(memId);
+
+            return true;
         }
         return false;
     }
