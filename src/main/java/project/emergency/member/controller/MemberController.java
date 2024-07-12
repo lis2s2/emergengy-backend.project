@@ -60,6 +60,8 @@ public class MemberController {
         return dto != null ? new ResponseEntity<>(dto, HttpStatus.OK) // 200 성공 코드와 회원 정보 반환
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+
 }
 
 //    @GetMapping("/read") // 주소수정

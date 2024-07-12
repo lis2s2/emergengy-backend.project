@@ -40,37 +40,60 @@ public class OrderServiceImpl implements OrderService{
         return entityToDto(order);
     }
 
+//    @Override
+//    @Transactional
+//    public OrderDTO saveOrder(OrderDTO orderDTO) {
+//        System.out.println("받은 OrderDTO: " + orderDTO.toString());
+//
+//        Order order = dtoToEntity(orderDTO);
+//
+//        for (OrderItem orderItem : order.getOrderItems()) {
+//            int prodNo = orderItem.getShop().getProdNo();
+//
+//            Shop shop = shopRepository.findById(prodNo)
+//                    .orElseThrow(() -> new RuntimeException("상품을 찾을 수 없습니다. 상품번호:" + prodNo));
+//            orderItem.setShop(shop);
+//            orderItem.setOrder(order);
+//        }
+//
+//        Order savedOrder = orderRepository.save(order);
+//        return entityToDto(savedOrder);
+//    }
+
     @Override
     @Transactional
     public OrderDTO saveOrder(OrderDTO orderDTO) {
         System.out.println("받은 OrderDTO: " + orderDTO.toString());
 
-        validateOrderDTO(orderDTO);
-
+        // Order DTO를 엔티티로 변환
         Order order = dtoToEntity(orderDTO);
 
+        // OrderItems를 설정
         for (OrderItem orderItem : order.getOrderItems()) {
             int prodNo = orderItem.getShop().getProdNo();
-            if (prodNo <= 0) {
-                System.out.println("Invalid prodNo in OrderItem: " + orderItem.toString());
-                throw new RuntimeException("Invalid prodNo: " + prodNo);
-            }
+
+            // Shop 엔티티 조회 및 설정
             Shop shop = shopRepository.findById(prodNo)
-                    .orElseThrow(() -> new RuntimeException("Shop not found with id " + prodNo));
+                    .orElseThrow(() -> new RuntimeException("상품을 찾을 수 없습니다. 상품번호:" + prodNo));
             orderItem.setShop(shop);
             orderItem.setOrder(order);
         }
 
-        Order savedOrder = orderRepository.save(order);
-        return entityToDto(savedOrder);
-    }
+        // Member 엔티티 조회
+        Member member = order.getMember();
+        int usedPoint = order.getUsedPoint();
 
-    private void validateOrderDTO(OrderDTO orderDTO) {
-        for (OrderItemDTO itemDTO : orderDTO.getOrderItems()) {
-            if (itemDTO.getProductNo() <= 0) {
-                throw new RuntimeException("Invalid productNo in OrderItemDTO: " + itemDTO.toString());
-            }
+        // Member의 포인트 차감 로직
+        if (member.getMemPoint() < usedPoint) {
+            throw new RuntimeException("사용할 포인트가 부족합니다.");
         }
+        member.setMemPoint(member.getMemPoint() - usedPoint);
+        memberRepository.save(member);
+
+        // Order 저장
+        Order savedOrder = orderRepository.save(order);
+
+        return entityToDto(savedOrder);
     }
 
     private Order dtoToEntity(OrderDTO dto) {
