@@ -68,4 +68,9 @@ public class MemberServiceTest {
         service.modifyMember(dto.getMemId(), dto.getMemEmail(), dto.getMemPwd());
         System.out.println(dto);
     }
+
+    @Test
+    public void 회원탈퇴() {
+        boolean dto = service.deleteMember("n_c0DxT-o");
+    }
 }
