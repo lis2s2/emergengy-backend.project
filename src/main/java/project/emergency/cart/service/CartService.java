@@ -20,6 +20,12 @@ public interface CartService {
 
     void deleteCart(int cartNo);
 
+    void deleteAllCart(String memberMemId);
+
+    void deleteSelectedItems(List<Integer> selectedItemIds);
+
+    long getCartCountForUser(String memberMemId);
+
     default Cart dtoToEntity(CartDTO dto) {
         Member member = Member.builder().memId(dto.getMemberId()).build(); // Member 객체 생성
         Shop shop = Shop.builder().prodNo(dto.getProdNo()).build(); // Shop 객체 생성

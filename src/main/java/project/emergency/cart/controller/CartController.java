@@ -45,4 +45,24 @@ public class CartController {
         service.updateCartCount(cartNo, prodCount);
         return ResponseEntity.ok("장바구니 상품 수량이 성공적으로 업데이트되었습니다");
     }
+
+    // 장바구니 수량 세기
+    @GetMapping("/count")
+    public long getCartCount(@RequestParam String memberMemId) {
+        return service.getCartCountForUser(memberMemId);
+    }
+
+    // 장바구니 전체 삭제(회원별)
+    @PutMapping("/deleteAll")
+    public ResponseEntity<String> deleteAllCart(@RequestParam String memberMemId) {
+        service.deleteAllCart(memberMemId);
+        return ResponseEntity.ok("회원의 장바구니가 모두 삭제되었습니다");
+    }
+
+    // 선택된 장바구니 항목 삭제
+    @PutMapping("/deleteSelected")
+    public ResponseEntity<String> deleteSelectedCartItems(@RequestBody List<Integer> selectedItemIds) {
+        service.deleteSelectedItems(selectedItemIds);
+        return ResponseEntity.ok("선택된 장바구니 항목이 성공적으로 삭제되었습니다");
+    }
 }
