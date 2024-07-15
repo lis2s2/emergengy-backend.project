@@ -8,6 +8,7 @@ import project.emergency.toilet.dto.ToiletDTO;
 import project.emergency.toilet.entity.Toilet;
 import project.emergency.toilet.repository.ToiletRepository;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -86,6 +87,9 @@ public class ToiletServiceImpl implements ToiletService {
     @Override
     public List<ToiletDTO> getListAll() {
         List<Toilet> entityList = ToiletRepository.findAll();
+        if (entityList.isEmpty()) {
+            return Collections.emptyList();
+        }
         return entityList.stream().map(this::entityToDto).toList();
     }
 }
