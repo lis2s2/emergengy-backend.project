@@ -24,6 +24,7 @@ public interface ReviewService {
                 .writer(member)
                 .reviewContent(dto.getReviewContent())
                 .isDeleted(dto.getIsDeleted())
+                .toiletTitle(dto.getToiletTitle())
                 .build();
     }
 
@@ -38,6 +39,7 @@ public interface ReviewService {
                 .regDate(entity.getRegDate())
                 .modDate(entity.getModDate())
                 .isDeleted(entity.getIsDeleted())
+                .toiletTitle(entity.getToiletTitle())
                 .build();
     }
 }

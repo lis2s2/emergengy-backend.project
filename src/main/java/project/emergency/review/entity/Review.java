@@ -31,7 +31,11 @@ public class Review extends BaseEntity {
     @Column(length = 10, nullable = false)
     int reviewScore;
 
+    @Column(length = 50, nullable = false)
+    String toiletTitle;
+
     @Column
     Boolean isDeleted;
+
 
 }

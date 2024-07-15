@@ -19,6 +19,7 @@ public class ReviewDTO {
     int reviewScore;
     LocalDateTime regDate;
     LocalDateTime modDate;
+    String toiletTitle;
     Boolean isDeleted;
 
 }
