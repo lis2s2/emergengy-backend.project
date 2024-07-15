@@ -23,8 +23,8 @@ public interface MemberService {
 
     String  findid(String name, String mail); // 아이디 찾기
 
-    String findpwd(MemberDTO dto); // 비밀번호 찾기
-//    String findpwd(String id, String name, String mail); // 비밀번호 찾기
+//    String findpwd(MemberDTO dto); // 비밀번호 찾기
+    String findpwd(String id, String name, String mail); // 비밀번호 찾기
 //    MemberDTO readPwd(String pwd);
 
     boolean modifyMember(String memId, String memEmail, String memPwd);
@@ -62,4 +62,5 @@ public interface MemberService {
 
         return entity;
     }
+
 }

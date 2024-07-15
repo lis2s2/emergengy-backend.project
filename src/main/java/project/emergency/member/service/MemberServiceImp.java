@@ -200,10 +200,10 @@ public class MemberServiceImp implements MemberService {
 //    }
 
         @Override
-        public String findpwd(MemberDTO dto) {
-//        public String findpwd(String memId, String memName, String memEmail) {
+//        public String findpwd(MemberDTO dto) {
+        public String findpwd(String memId, String memName, String memEmail) {
 
-            Member member = repository.findByMemEmail(dto.getMemEmail()).orElse(null);
+            Member member = repository.findByMemEmail(memEmail).orElse(null);
 
             // 임시 비밀번호 생성
             String tempPwd = getTempPassword();
@@ -215,7 +215,7 @@ public class MemberServiceImp implements MemberService {
             // 메일 생성
             MailDto mailDto = new MailDto();
             mailDto.setSender("hyeon6895@naver.com");
-            mailDto.setReceiver(dto.getMemEmail());
+            mailDto.setReceiver(memEmail);
             mailDto.setTitle("나지금급해 홈페이지 임시비밀번호 안내");
             mailDto.setMessage("안녕하세요 나지금급해입니다." + member.getMemName() + " 회원님의 임시 비밀번호는 " + tempPwd + " 입니다.");
 
