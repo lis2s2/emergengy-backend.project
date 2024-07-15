@@ -14,13 +14,14 @@ public class ToiletDTO {
     Boolean memRegister;
     String writer;
     Double lat;
-    Double log;
+    Double lng;
     String toiletAddress;
     String toiletName;
     String detail;
     Boolean disabled;
     Boolean diaper;
     Boolean separated;
-    String status;
+    Boolean paper;
+    String toiletStatus;
 
 }

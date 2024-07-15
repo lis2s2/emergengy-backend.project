@@ -9,11 +9,15 @@ import java.util.List;
 public interface ToiletService {
 
     void register(ToiletDTO dto);
+    void registerInfo(ToiletDTO dto);
     ToiletDTO getByToiletNo(String toiletNo);
     List<ToiletDTO> getListByMemRegister();
     List<ToiletDTO> getListByDisabled();
     List<ToiletDTO> getListByDiaper();
     List<ToiletDTO> getListBySeparated();
+    List<ToiletDTO> getListByPaper();
+    List<ToiletDTO> getListAll();
+
 
 
     default Toilet dtoToEntity(ToiletDTO dto) {
@@ -23,14 +27,15 @@ public interface ToiletService {
                 .memRegister(dto.getMemRegister())
                 .writer(member)
                 .lat(dto.getLat())
-                .log(dto.getLog())
+                .lng(dto.getLng())
                 .toiletName(dto.getToiletName())
                 .toiletAddress(dto.getToiletAddress())
                 .detail(dto.getDetail())
                 .disabled(dto.getDisabled())
                 .diaper(dto.getDiaper())
                 .separated(dto.getSeparated())
-                .status(dto.getStatus())
+                .paper(dto.getPaper())
+                .toiletStatus(dto.getToiletStatus())
                 .build();
     }
 
@@ -40,14 +45,15 @@ public interface ToiletService {
                 .memRegister(entity.getMemRegister())
                 .writer(entity.getWriter().getMemId())
                 .lat(entity.getLat())
-                .log(entity.getLog())
+                .lng(entity.getLng())
                 .toiletName(entity.getToiletName())
                 .toiletAddress(entity.getToiletAddress())
                 .detail(entity.getDetail())
                 .disabled(entity.getDisabled())
                 .diaper(entity.getDiaper())
                 .separated(entity.getSeparated())
-                .status(entity.getStatus())
+                .paper(entity.getPaper())
+                .toiletStatus(entity.getToiletStatus())
                 .build();
     }
 }

@@ -22,6 +22,18 @@ public class ToiletController {
         return new ResponseEntity<>(true, HttpStatus.CREATED);
     }
 
+    @PostMapping("/registerInfo")
+    public ResponseEntity<Boolean> registerInfo(@RequestBody ToiletDTO dto) {
+        service.registerInfo(dto);
+        return new ResponseEntity<>(true, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<List<ToiletDTO>> readAll() {
+        List<ToiletDTO> list = service.getListAll();
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
     @GetMapping("/list/byToiletNo")
     public ResponseEntity<ToiletDTO> readByToiletNo(@RequestParam(name = "no") String no) {
         ToiletDTO dto = service.getByToiletNo(no);
@@ -49,6 +61,12 @@ public class ToiletController {
     @GetMapping("/list/bySeparated")
     public ResponseEntity<List<ToiletDTO>> readBySeparated() {
         List<ToiletDTO> list = service.getListBySeparated();
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+    @GetMapping("/list/byPaper")
+    public ResponseEntity<List<ToiletDTO>> readByPaper() {
+        List<ToiletDTO> list = service.getListByPaper();
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
