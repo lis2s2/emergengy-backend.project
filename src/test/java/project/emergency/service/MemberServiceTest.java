@@ -17,13 +17,13 @@ public class MemberServiceTest {
     @Test
     public void 회원등록() {
         MemberDTO dto = MemberDTO.builder()
-                .memId("user")
-                .memPwd("1234")
-                .memEmail("user1@naver.com")
-                .memName("유저")
+                .memId("lees6895@naver.com")
+                .memPwd("kgkg1237")
+                .memEmail("lees6895@naver.com")
+                .memName("이수현")
 //                .memNick("똥쟁이")
-//                .memGrade("Regular") // Regular 또는 Gold
-                .memRole("Role_USER") 
+                .memGrade("Regular") // Regular 또는 Gold
+                .memRole("Role_USER")
                 .memPoint(30000)
                 .build();
 
@@ -49,8 +49,28 @@ public class MemberServiceTest {
         System.out.println(dto);
     }
 
+    @Test
     public void 회원이메일단건조회() {
         MemberDTO dto = service.readEmail("user1@naver.com");
         System.out.println(dto);
+    }
+
+    @Test
+    public void 아이디찾기() {
+        String dto = service.findid("이수현", "hyeon6895@naver.com");
+        System.out.println(dto);
+    }
+
+    @Test
+    public void 회원정보수정() {
+        MemberDTO dto = service.readEmail("hyeon1221@naver.com");
+        dto.setMemEmail("hyeon0000@naver.com");
+        service.modifyMember(dto.getMemId(), dto.getMemEmail(), dto.getMemPwd());
+        System.out.println(dto);
+    }
+
+    @Test
+    public void 회원탈퇴() {
+        boolean dto = service.deleteMember("n_c0DxT-o");
     }
 }

@@ -1,12 +1,17 @@
 package project.emergency.config;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -15,9 +20,13 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import jakarta.servlet.ServletException;
@@ -31,12 +40,18 @@ import project.emergency.security.filter.ApiLoginFilter;
 import project.emergency.security.service.UserDetailsServiceImpl;
 import project.emergency.security.util.JWTUtil;
 
-/*
- * 스프링 시큐리티 설정 클래스
- */
 @Configuration
+// 스프링 시큐리티 필터(SecurityConfig)가 스프링 필터체인에 등록
 @EnableWebSecurity
+//secured 어노테이션 활성화, preAuthorize, postAuthorize 어노테이션 활성화
+@EnableMethodSecurity(securedEnabled = true, prePostEnabled = true)
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+    //  SecurityConfig 클래스에서 clientRegistrationRepository 빈을 주입 받도록 함
+    private final ClientRegistrationRepository clientRegistrationRepository;
+
+    private final DefaultOAuth2UserService oAuth2UserService;
 
     // 인증서비스
     @Bean
@@ -66,15 +81,20 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         // 1.인증 필터 등록: /member 또는 /board 요청이 들어오면 사용자 인증 실행
-        String[] arr = {"/member/*", "/freeboard/*", "/helpboard/*", "/shop/*", "/order/*", "/register/*", "/mypage/*", "/login/*", "/search/*", "/freecomment/*", "/helpcomment/*", "/logout"};
+        String[] arr = {"/member/*", "/freeboard/*", "/helpboard/*", "/shop/*", "/order/*", "/search/*", "/freecomment/*", "/helpcomment/*", "/logout"};
+      
         http.addFilterBefore(new ApiCheckFilter(arr, jwtUtil(), customUserDetailsService()), UsernamePasswordAuthenticationFilter.class);
 
         // 2.권한 설정: 회원등록-아무나, 게시물-user, 회원-admin
         http
                 .authorizeHttpRequests()
                 .requestMatchers("/**").permitAll()
-//                .requestMatchers("/register", "/login", "/logout").permitAll()
-//                .requestMatchers("/freeboard/*").hasAnyRole("USER", "ADMIN")
+
+                .requestMatchers(
+                        "/register", "/login/*", "/logout", "/login/oauth2/**", "/api/*", "/register/**", "/search/*"
+                        ).permitAll()
+                .requestMatchers("/order/*", "/mypage/**", "/freecomment/*", "/helpcomment/*", "/shop/*").hasAnyRole("USER", "ADMIN")
+
 //                .requestMatchers("/helpboard/*").hasAnyRole("USER", "ADMIN")
 //                .requestMatchers("/shop/*").hasAnyRole("USER", "ADMIN")
 //                .requestMatchers("/order/*").hasAnyRole("USER", "ADMIN")
@@ -88,6 +108,12 @@ public class SecurityConfig {
 //                .anyRequest().authenticated()
 
                 .and()
+                // oauth2
+                .oauth2Login(oauth2 -> oauth2
+                        .redirectionEndpoint(endpoint -> endpoint.baseUri("/login/oauth2/**"))
+                        .userInfoEndpoint(endpoint -> endpoint.userService(oAuth2UserService))
+                )
+
                 .csrf().disable() //csrf 비활성화
                 //토큰을 사용하니까 세션은 사용안함
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -97,7 +123,6 @@ public class SecurityConfig {
                 .logoutSuccessHandler(logoutSuccessHandler());
 
         // 3.로그인 필터 등록: 로그인 요청이 들어오면 토큰 발급
-
         // 인증매니저 생성
         AuthenticationManagerBuilder authenticationManagerBuilder = http
                 .getSharedObject(AuthenticationManagerBuilder.class);
@@ -164,6 +189,25 @@ public class SecurityConfig {
 
 
     @Bean
+    public AuthenticationSuccessHandler successHandler() {
+        return ((request, response, authentication) -> {
+            DefaultOAuth2User defaultOAuth2User = (DefaultOAuth2User) authentication.getPrincipal();
+
+            String id = defaultOAuth2User.getAttributes().get("id").toString();
+            String body = """
+                    {"id":"%s"}
+                    """.formatted(id);
+
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+
+            PrintWriter writer = response.getWriter();
+            writer.println(body);
+            writer.flush();
+        });
+    }
+
+    @Bean
     public LogoutSuccessHandler logoutSuccessHandler() {
 
         LogoutSuccessHandler handler = new LogoutSuccessHandler() {
@@ -190,3 +234,4 @@ public class SecurityConfig {
         return handler;
     }
 }
+

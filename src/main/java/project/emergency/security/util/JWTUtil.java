@@ -59,7 +59,8 @@ public class JWTUtil {
 
         try {
             DefaultJws defaultJws = (DefaultJws) Jwts.parser()
-                    .setSigningKey(secretKey.getBytes("UTF-8")).parseClaimsJws(tokenStr);
+                                            .setSigningKey(secretKey.getBytes("UTF-8"))
+                                            .parseClaimsJws(tokenStr).getBody();
 
             log.info(defaultJws);
 
@@ -70,7 +71,6 @@ public class JWTUtil {
             log.info("------------------------");
 
             contentValue = claims.getSubject();
-
 
         } catch (Exception e) {
             e.printStackTrace();
