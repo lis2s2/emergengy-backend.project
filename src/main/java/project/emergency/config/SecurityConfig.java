@@ -93,7 +93,7 @@ public class SecurityConfig {
                 .requestMatchers(
                         "/register", "/login/*", "/logout", "/login/oauth2/**", "/api/*", "/register/**", "/search/*"
                         ).permitAll()
-                .requestMatchers("/order/*", "/mypage/**", "/freecomment/*", "/helpcomment/*", "/shop/*").hasAnyRole("USER", "ADMIN")
+                .requestMatchers("/order/*", "/mypage/**", "/freecomment/*", "/helpcomment/*", "/shop/*", "/find/**").hasAnyRole("USER", "ADMIN")
 
 //                .requestMatchers("/helpboard/*").hasAnyRole("USER", "ADMIN")
 //                .requestMatchers("/shop/*").hasAnyRole("USER", "ADMIN")

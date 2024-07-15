@@ -1,13 +1,11 @@
 package project.emergency.naver.controller;
 
-import net.minidev.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-import project.emergency.member.entitiy.Member;
 import project.emergency.naver.service.NaverUserService;
 
 @RestController

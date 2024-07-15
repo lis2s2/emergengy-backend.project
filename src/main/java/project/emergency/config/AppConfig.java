@@ -21,11 +21,11 @@ public class AppConfig {
     @Bean
     public JavaMailSender javaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost("smtp.example.com");
+        mailSender.setHost("smtp.naver.com");
         mailSender.setPort(587);
 
-        mailSender.setUsername("your-email@example.com");
-        mailSender.setPassword("your-email-password");
+        mailSender.setUsername("hyeon6895@naver.com");
+        mailSender.setPassword("dltngusdla");
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");

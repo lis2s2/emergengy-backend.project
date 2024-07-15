@@ -16,18 +16,16 @@ public class MailServiceImp implements MailService {
 
     @Override
     public String sendMail(MailDto mailDto) throws MessagingException {
-//        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-//        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
-//        mimeMessageHelper.setTo(mailDto.getReceiver());
-//        mimeMessageHelper.setSubject(mailDto.getTitle());
-//        mimeMessageHelper.setText(mailDto.getMessage(), false);
-//        javaMailSender.send(mimeMessage);
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
+        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+
+        mimeMessageHelper.setFrom(mailDto.getSender());
         mimeMessageHelper.setTo(mailDto.getReceiver());
         mimeMessageHelper.setSubject(mailDto.getTitle());
-        mimeMessageHelper.setText(mailDto.getMessage(), false);
+        mimeMessageHelper.setText(mailDto.getMessage(), true);
+
         javaMailSender.send(mimeMessage);
+
         return "메일 전송 성공";
     }
 }

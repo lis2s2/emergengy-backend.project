@@ -34,11 +34,9 @@ public class OAuth2UserServiceImp extends DefaultOAuth2UserService {
 
         if (oauthClientName.equals("kakao")) {
             userId = "kakao" + oAuth2User.getAttributes().get("id");
-//            member = new MemberDTO("userId", "email@eamil.com");
         }
 
         if (oauthClientName.equals("naver")) {
-//            Map<String, String> responseMap = (Map<String, String>) oAuth2User.getAttributes().get("response");
         }
 
         return oAuth2User;

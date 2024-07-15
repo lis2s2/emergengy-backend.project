@@ -73,4 +73,5 @@ public class MemberServiceTest {
     public void 회원탈퇴() {
         boolean dto = service.deleteMember("n_c0DxT-o");
     }
+
 }
