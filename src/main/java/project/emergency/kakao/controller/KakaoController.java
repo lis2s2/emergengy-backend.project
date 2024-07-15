@@ -17,11 +17,11 @@ import project.emergency.member.entitiy.Member;
 public class KakaoController {
 
     private final RestTemplate restTemplate;
+
     private final KakaoUserService kakaoUserService;
 
     @PostMapping("/kakao-token")
     public ResponseEntity<String> proxyKakaoToken(@RequestParam String code) {
-
         String TOKEN_URL = "https://kauth.kakao.com/oauth/token?grant_type=authorization_code"
                             + "&redirect_uri=http://localhost:3000/login/oauth2/code/kakao"
                             + "&client_id=6725e27a1c1047905dfd6bad61521355&code=" + code;
@@ -40,7 +40,6 @@ public class KakaoController {
     // 헤더
     @GetMapping("/kakao-user")
     public ResponseEntity<String> getKakaoUserInfo(@RequestHeader("Authorization") String authorization) {
-
         String USER_INFO_URL = "https://kapi.kakao.com/v1/user/access_token_info";
 //        String USER_INFO_URL = "https://kapi.kakao.com/v2/user/me";
 

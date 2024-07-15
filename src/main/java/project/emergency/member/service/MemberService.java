@@ -23,10 +23,15 @@ public interface MemberService {
 
     String  findid(String name, String mail); // 아이디 찾기
 
-//    String findpwd(String id, String name, String mail); // 비밀번호 찾기
-//    MemberDTO readPwd(String pwd);
+    String findpwd(String id, String name, String mail); // 비밀번호 찾기
 
-    boolean modifyMember(String memId, String memEmail, String memPwd);
+//    void updatePassword(String memId, String encodedPwd);
+
+    String getTempPassword();
+
+    String passwordEncoder(String tempPwd);
+
+    boolean modifyMember(String memId, String memEmail, String memPwd); // 회원정보 수정
 
     boolean deleteMember(String memId); // 회원 탈퇴
 
@@ -36,6 +41,7 @@ public interface MemberService {
                 .memPwd(entity.getMemPwd())
                 .memEmail(entity.getMemEmail())
                 .memName(entity.getMemName())
+                .provider(entity.getProvider())
 //                .memNick(entity.getMemNick())
                 .memGrade(entity.getMemGrade())
                 .memRole(entity.getMemRole())
@@ -53,6 +59,7 @@ public interface MemberService {
                 .memPwd(dto.getMemPwd())
                 .memEmail(dto.getMemEmail())
                 .memName(dto.getMemName())
+                .provider(dto.getProvider())
 //                .memNick(dto.getMemNick())
                 .memGrade(dto.getMemGrade())
                 .memRole(dto.getMemRole())
@@ -61,4 +68,5 @@ public interface MemberService {
 
         return entity;
     }
+
 }
