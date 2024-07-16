@@ -8,6 +8,7 @@ import project.emergency.member.dto.MailDto;
 import project.emergency.member.dto.MemberDTO;
 import project.emergency.member.service.MailService;
 import project.emergency.member.service.MemberService;
+import project.emergency.review.dto.ReviewDTO;
 
 import java.util.List;
 
@@ -88,6 +89,12 @@ public class MemberController {
         boolean result = service.modifyMember(dto.getMemId(),dto.getMemEmail(), dto.getMemPwd());
 
         return new ResponseEntity<>(result, result? HttpStatus.OK : HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping("/member/byId")
+    public ResponseEntity<MemberDTO> readByWriter(@RequestParam(name = "id") String id) {
+        MemberDTO dto = service.readId(id);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     // 회원 탈퇴
