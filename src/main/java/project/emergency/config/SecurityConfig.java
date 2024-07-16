@@ -81,7 +81,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         // 1.인증 필터 등록: /member 또는 /board 요청이 들어오면 사용자 인증 실행
-        String[] arr = {"/member/*", "/freeboard/*", "/helpboard/*", "/shop/*", "/order/*", "/modify/*", "/freecomment/*", "/helpcomment/*", "/logout", "/toilet/*", "/review/*"};
+        String[] arr = {"/member/*", "/shop/*", "/order/*", "/modify/*", "/logout", "/toilet/*", "/review/*", "/mypage/*", "/delete-member/*"};
       
         http.addFilterBefore(new ApiCheckFilter(arr, jwtUtil(), customUserDetailsService()), UsernamePasswordAuthenticationFilter.class);
 
