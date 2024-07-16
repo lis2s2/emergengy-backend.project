@@ -48,7 +48,7 @@ import project.emergency.security.util.JWTUtil;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    //  SecurityConfig 클래스에서 clientRegistrationRepository 빈을 주입 받도록 함
+//      SecurityConfig 클래스에서 clientRegistrationRepository 빈을 주입 받도록 함
     private final ClientRegistrationRepository clientRegistrationRepository;
 
     private final DefaultOAuth2UserService oAuth2UserService;
@@ -81,7 +81,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         // 1.인증 필터 등록: /member 또는 /board 요청이 들어오면 사용자 인증 실행
-        String[] arr = {"/member/*", "/freeboard/*", "/helpboard/*", "/shop/*", "/order/*", "/search/*", "/freecomment/*", "/helpcomment/*", "/logout"};
+        String[] arr = {"/member/*", "/freeboard/*", "/helpboard/*", "/shop/*", "/order/*", "/modify/*", "/freecomment/*", "/helpcomment/*", "/logout", "/toilet/*", "/review/*"};
       
         http.addFilterBefore(new ApiCheckFilter(arr, jwtUtil(), customUserDetailsService()), UsernamePasswordAuthenticationFilter.class);
 
@@ -90,10 +90,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers("/**").permitAll()
 
-                .requestMatchers(
-                        "/register", "/login/*", "/logout", "/login/oauth2/**", "/api/*", "/register/**", "/search/*"
-                        ).permitAll()
-                .requestMatchers("/order/*", "/mypage/**", "/freecomment/*", "/helpcomment/*", "/shop/*", "/find/**").hasAnyRole("USER", "ADMIN")
+//                .requestMatchers(
+//                        "/register", "/login/*", "/logout", "/login/oauth2/**", "/api/*", "/register/**", "/search/*"
+//                        ).permitAll()
+//                .requestMatchers("/order/*", "/mypage/**", "/freecomment/*", "/helpcomment/*", "/shop/*", "/find/**").hasAnyRole("USER", "ADMIN")
 
 //                .requestMatchers("/helpboard/*").hasAnyRole("USER", "ADMIN")
 //                .requestMatchers("/shop/*").hasAnyRole("USER", "ADMIN")
@@ -108,7 +108,7 @@ public class SecurityConfig {
 //                .anyRequest().authenticated()
 
                 .and()
-                // oauth2
+//                // oauth2
                 .oauth2Login(oauth2 -> oauth2
                         .redirectionEndpoint(endpoint -> endpoint.baseUri("/login/oauth2/**"))
                         .userInfoEndpoint(endpoint -> endpoint.userService(oAuth2UserService))

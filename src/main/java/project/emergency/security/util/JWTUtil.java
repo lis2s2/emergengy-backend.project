@@ -15,7 +15,6 @@ import java.util.Set;
 @Log4j2
 public class JWTUtil {
 
-    // 엔진 암호
     private String secretKey = "zerock12345678";
 
     // 토큰 유효기간: 1month
@@ -37,12 +36,9 @@ public class JWTUtil {
     // 토큰을 생성하는 메소드
     public String generateToken(String content) throws Exception {
 
-        return Jwts.builder()
-                .setIssuedAt(new Date())
-                .setExpiration(Date.from(ZonedDateTime.now().plusMinutes(expire).toInstant()))
-                .claim("sub", content)
-                .signWith(SignatureAlgorithm.HS256, secretKey.getBytes("UTF-8"))
-                .compact();
+        return Jwts.builder().setIssuedAt(new Date())
+                .setExpiration(Date.from(ZonedDateTime.now().plusMinutes(expire).toInstant())).claim("sub", content)
+                .signWith(SignatureAlgorithm.HS256, secretKey.getBytes("UTF-8")).compact();
     }
 
     // 토큰에서 아이디를 추출하는 메소드
@@ -58,9 +54,8 @@ public class JWTUtil {
         }
 
         try {
-            DefaultJws defaultJws = (DefaultJws) Jwts.parser()
-                                            .setSigningKey(secretKey.getBytes("UTF-8"))
-                                            .parseClaimsJws(tokenStr).getBody();
+            DefaultJws defaultJws = (DefaultJws) Jwts.parser().setSigningKey(secretKey.getBytes("UTF-8"))
+                    .parseClaimsJws(tokenStr);
 
             log.info(defaultJws);
 
@@ -79,4 +74,5 @@ public class JWTUtil {
         }
         return contentValue;
     }
+
 }
