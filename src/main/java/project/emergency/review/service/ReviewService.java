@@ -14,6 +14,7 @@ public interface ReviewService {
     List<ReviewDTO> getList();
     List<ReviewDTO> getByWriter(String writer);
     double getToiletAvgScore(String toiletNo);
+    void deleteById(int writer);
 
     default Review dtoToEntity(ReviewDTO dto) {
         Member member = Member.builder().memId(dto.getWriter()).build();

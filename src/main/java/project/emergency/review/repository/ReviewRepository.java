@@ -10,4 +10,5 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
     // 엔티티 변수명이랑 동일하게 함수명도 적어야 함
     List<Review> findByToiletNo(String toiletNo);
     List<Review> findByWriter(Member writer);
+    void deleteByReviewNo(int reviewNo);
 }

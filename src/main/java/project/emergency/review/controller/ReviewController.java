@@ -43,9 +43,11 @@ public class ReviewController {
         return new ResponseEntity<>(score, HttpStatus.OK);
     }
 
-    @GetMapping
-    public ResponseEntity<List<ReviewDTO>> searchShops() {
-        List<ReviewDTO> list = service.getList();
-        return new ResponseEntity<>(list, HttpStatus.OK);
+    @GetMapping("/delete")
+    public ResponseEntity<Boolean> deleteReviewByNo(@RequestParam(name = "no") int reviewNo) {
+        service.deleteById(reviewNo);
+        return new ResponseEntity<>(true, HttpStatus.OK);
     }
+
+
 }

@@ -50,4 +50,9 @@ public class ReviewServiceImpl implements ReviewService {
                 .orElse(3.0);
         return Math.round(averageScore * 10) / 10.0;
     }
+
+    @Override
+    public void deleteById(int writer) {
+        repository.deleteById(writer);
+    }
 }
