@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface ToiletService {
 
-    void register(ToiletDTO dto);
-    void registerInfo(ToiletDTO dto);
+    String register(ToiletDTO dto);
+    String registerInfo(ToiletDTO dto);
     ToiletDTO getByToiletNo(String toiletNo);
     List<ToiletDTO> getListByMemRegister();
     List<ToiletDTO> getListByDisabled();

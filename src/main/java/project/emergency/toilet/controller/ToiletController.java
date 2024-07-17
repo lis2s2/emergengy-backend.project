@@ -17,15 +17,15 @@ public class ToiletController {
     ToiletService service;
 
     @PostMapping("/register")
-    public ResponseEntity<Boolean> register(@RequestBody ToiletDTO dto) {
-        service.register(dto);
-        return new ResponseEntity<>(true, HttpStatus.CREATED);
+    public ResponseEntity<String> register(@RequestBody ToiletDTO dto) {
+        String result = service.register(dto);
+        return new ResponseEntity<String>(result, HttpStatus.CREATED);
     }
 
     @PostMapping("/registerInfo")
-    public ResponseEntity<Boolean> registerInfo(@RequestBody ToiletDTO dto) {
-        service.registerInfo(dto);
-        return new ResponseEntity<>(true, HttpStatus.CREATED);
+    public ResponseEntity<String> registerInfo(@RequestBody ToiletDTO dto) {
+        String result = service.registerInfo(dto);
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
     @GetMapping("/list")

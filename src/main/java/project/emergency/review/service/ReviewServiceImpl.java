@@ -3,6 +3,7 @@ package project.emergency.review.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.emergency.member.entitiy.Member;
+import project.emergency.member.repository.MemberRepository;
 import project.emergency.review.dto.ReviewDTO;
 import project.emergency.review.entity.Review;
 import project.emergency.review.repository.ReviewRepository;
@@ -15,7 +16,6 @@ public class ReviewServiceImpl implements ReviewService {
     @Autowired
     ReviewRepository repository;
 
-
     @Override
     public List<ReviewDTO> getByToiletNo(String toiletNo) {
         List<Review> entityList = repository.findByToiletNo(toiletNo);
@@ -26,6 +26,7 @@ public class ReviewServiceImpl implements ReviewService {
     public void register(ReviewDTO dto) {
         Review entity = dtoToEntity(dto);
         repository.save(entity);
+
     }
 
     @Override

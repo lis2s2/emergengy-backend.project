@@ -22,25 +22,38 @@ public class ToiletServiceImpl implements ToiletService {
     MemberRepository memberRepository;
 
     @Override
-    public void register(ToiletDTO dto) {
+    public String register(ToiletDTO dto) {
         Toilet entity = dtoToEntity(dto);
         Optional<Member> optionalMember = memberRepository.findById(dto.getWriter());
         if (optionalMember.isPresent()) {
             Member member = optionalMember.get();
             member.setMemPoint(member.getMemPoint()+1000);
+            if ("FAMILY".equals(member.getMemGrade()) && member.getMemPoint() >= 3000) {
+                member.setMemGrade("VIP");
+                ToiletRepository.save(entity);
+                return "VIP";
+            }
         }
         ToiletRepository.save(entity);
+        return null;
     }
 
     @Override
-    public void registerInfo(ToiletDTO dto) {
+    public String registerInfo(ToiletDTO dto) {
         Toilet entity = dtoToEntity(dto);
         Optional<Member> optionalMember = memberRepository.findById(dto.getWriter());
         if (optionalMember.isPresent()) {
             Member member = optionalMember.get();
             member.setMemPoint(member.getMemPoint()+500);
+            if ("FAMILY".equals(member.getMemGrade()) && member.getMemPoint() >= 3000) {
+                member.setMemGrade("VIP");
+                ToiletRepository.save(entity);
+                return "VIP";
+            }
         }
         ToiletRepository.save(entity);
+        return null;
+
     }
 
     @Override
