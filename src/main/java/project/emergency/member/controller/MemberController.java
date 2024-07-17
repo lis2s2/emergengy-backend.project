@@ -102,6 +102,7 @@ public class MemberController {
     public ResponseEntity<Boolean> deleteMember(@PathVariable String memId) {
         boolean result = service.deleteMember(memId);
 
+
         return new ResponseEntity<>(result, result ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 

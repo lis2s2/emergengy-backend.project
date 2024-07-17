@@ -8,6 +8,10 @@ import project.emergency.member.dto.MailDto;
 import project.emergency.member.dto.MemberDTO;
 import project.emergency.member.entitiy.Member;
 import project.emergency.member.repository.MemberRepository;
+import project.emergency.review.entity.Review;
+import project.emergency.review.repository.ReviewRepository;
+import project.emergency.toilet.entity.Toilet;
+import project.emergency.toilet.repository.ToiletRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +22,12 @@ public class MemberServiceImp implements MemberService {
 
     @Autowired
     private MemberRepository repository;
+
+    @Autowired
+    ReviewRepository reviewRepository;
+
+    @Autowired
+    ToiletRepository toiletRepository;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -158,10 +168,13 @@ public class MemberServiceImp implements MemberService {
     @Override
     public boolean deleteMember(String memId) {
         Optional<Member> result = repository.findById(memId);
-
+        Member member = Member.builder().memId(memId).build();
+        List<Review> reviewList = reviewRepository.findByWriter(member);
+        List<Toilet> toiletList = toiletRepository.findByWriter(member);
+        reviewRepository.deleteAll(reviewList);
+        toiletRepository.deleteAll(toiletList);
         if (result.isPresent()) {
             repository.deleteById(memId);
-
             return true;
         }
         return false;
