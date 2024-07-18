@@ -30,13 +30,13 @@ public class Toilet extends BaseEntity {
     @Column(length = 20, nullable = false)
     Double lng;
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 50, nullable = false)
     String toiletName;
 
     @Column(length = 50, nullable = false)
     String toiletAddress;
 
-    @Column(length = 20)
+    @Column(length = 50)
     String detail;
 
     @Column
