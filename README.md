@@ -9,25 +9,36 @@
 목적: 공공화장실의 위치를 쉽게 찾고, 사용 후 후기를 공유할 수 있는 웹/앱 페이지
 ***
 기능: 
-*회원 가입 및 로그인
-*위치 검색, 지도 표시, 화장실 등록 후 포인트 제공
-*포인트샵
++ 회원 가입 및 로그인
+
++ 위치 검색, 지도 표시, 화장실 등록 후 포인트 제공
+
++ 포인트샵
 ***
 기대 효과: 
-*공공 화장실 이용 편의성 향상
-*서비스 품질 개선
-*사회적 참여 증진
++ 공공 화장실 이용 편의성 향상
+
++ 서비스 품질 개선
+
++ 사회적 참여 증진
 ***
 
 ### ⭐Dependencies
-Lombok,
-Spring Web,
-Spring Data JPA,
-MariaDB Driver,
-Spring Security,
-OAuth2 Client, <- 소셜 로그인 시에 필요
-validation, <- 어노테이션 라이브러리
-Java Mail Sender,
++ Lombok
+
++ Spring Web
+
++ Spring Data JPA
+
++ MariaDB Driver
+
++ Spring Security
+
++ OAuth2 Client <- 소셜 로그인 시에 필요
+
++ validation <- 어노테이션 라이브러리
+
++ Java Mail Sender
 
 ### ✏️ERD
 ![나 지금 급해](https://github.com/user-attachments/assets/92e05a66-9944-46de-811a-75acbb5bfad9)
