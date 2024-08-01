@@ -65,9 +65,9 @@ public class MemberController {
     // 아이디 찾기
     @PostMapping("/find/id")
     public ResponseEntity<String> findId(@RequestBody MemberDTO dto) {
-        String password = service.findid(dto.getMemName(), dto.getMemEmail());
+        String result = service.findid(dto.getMemName(), dto.getMemEmail());
 
-        return password != null ? new ResponseEntity<>(password, HttpStatus.OK)
+        return result != null ? new ResponseEntity<>(result, HttpStatus.OK)
                 : new ResponseEntity<>("사용자를 찾을 수 없습니다.", HttpStatus.NOT_FOUND);
     }
 
