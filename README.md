@@ -23,6 +23,7 @@
 + 사회적 참여 증진
 ***
 
+
 ### ⭐Dependencies
 + Lombok
 
@@ -39,6 +40,7 @@
 + validation <- 어노테이션 라이브러리
 
 + Java Mail Sender
+
 
 ### ✏️ERD
 ![나 지금 급해](https://github.com/user-attachments/assets/92e05a66-9944-46de-811a-75acbb5bfad9)
