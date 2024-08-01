@@ -1,4 +1,4 @@
-** 🚀나 지금 급해(2024.06.21 ~ 2024.07.18)
+## 🚀나 지금 급해(2024.06.21 ~ 2024.07.18)
 
 
 ![java](https://github.com/user-attachments/assets/cc6e5f5d-80c8-4595-ab8b-2401a2380f5e)
@@ -19,7 +19,7 @@
 *사회적 참여 증진
 ***
 
-*** ⭐Dependencies 추가
+#### ⭐Dependencies 추가
 Lombok,
 Spring Web,
 Spring Data JPA,
@@ -29,10 +29,10 @@ OAuth2 Client, <- 소셜 로그인 시에 필요
 validation, <- 어노테이션 라이브러리
 Java Mail Sender,
 
-*** ✏️ERD
+#### ✏️ERD
 ![나 지금 급해](https://github.com/user-attachments/assets/92e05a66-9944-46de-811a-75acbb5bfad9)
 
 
-*** 🌈팀원 소개
+#### 🌈팀원 소개
 ![image](https://github.com/user-attachments/assets/ed38148a-43f5-46a0-b29e-8ffc9a1783d1)
 
