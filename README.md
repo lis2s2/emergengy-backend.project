@@ -1,4 +1,4 @@
-# 🚀나 지금 급해(2024.06.21 ~ 2024.07.18)
+# 🚀나 지금 급해 (2024.06.21 ~ 2024.07.18)
 
 
 ![java](https://github.com/user-attachments/assets/cc6e5f5d-80c8-4595-ab8b-2401a2380f5e)
@@ -19,7 +19,7 @@
 *사회적 참여 증진
 ***
 
-### ⭐Dependencies 추가
+### ⭐Dependencies
 Lombok,
 Spring Web,
 Spring Data JPA,
