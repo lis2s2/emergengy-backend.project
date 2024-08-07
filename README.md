@@ -43,9 +43,10 @@
 
 
 ### ✏️ERD
-![나 지금 급해](https://github.com/user-attachments/assets/92e05a66-9944-46de-811a-75acbb5bfad9)
+![나 지금 급해](https://github.com/user-attachments/assets/18a741d0-bd9e-4dee-879b-85fcecd689e2)
 
 
 ### 🌈팀원 소개
-![image](https://github.com/user-attachments/assets/ed38148a-43f5-46a0-b29e-8ffc9a1783d1)
+![image](https://github.com/user-attachments/assets/4fa90579-185e-4b8b-ad79-5f1ebb90ce07)
+
 
