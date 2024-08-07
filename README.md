@@ -1,9 +1,10 @@
 # 🚀나 지금 급해 (2024.06.21 ~ 2024.07.18)
 
 
-![java](https://github.com/user-attachments/assets/cc6e5f5d-80c8-4595-ab8b-2401a2380f5e)
-![spring](https://github.com/user-attachments/assets/98535fb8-4829-4c7c-a8cb-e28024fda429)
-![mariadb](https://github.com/user-attachments/assets/394c5eab-9584-4398-bc76-1e970cd6fb90)
+![image](https://github.com/user-attachments/assets/6ad22a88-c0b2-426a-83c5-e0987fba3766)
+![image](https://github.com/user-attachments/assets/aa4585e7-e02f-4c33-8196-7e8743269bbd)
+![image](https://github.com/user-attachments/assets/f53b5498-d855-4a5f-98a0-c3005559ae05)
+
 
 ***
 목적: 공공화장실의 위치를 쉽게 찾고, 사용 후 후기를 공유할 수 있는 웹/앱 페이지
