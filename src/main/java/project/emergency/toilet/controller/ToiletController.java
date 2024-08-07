@@ -46,6 +46,7 @@ public class ToiletController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
+    // 여기서부터 사용X
     @GetMapping("/list/byDisabled")
     public ResponseEntity<List<ToiletDTO>> readByDisabled() {
         List<ToiletDTO> list = service.getListByDisabled();

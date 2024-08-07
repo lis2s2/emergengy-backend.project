@@ -69,6 +69,7 @@ public class ToiletServiceImpl implements ToiletService {
         return entityList.stream().map(this::entityToDto).toList();
     }
 
+    // 여기서부터 사용X
     @Override
     public List<ToiletDTO> getListByDisabled() {
         Boolean disabled = true;
