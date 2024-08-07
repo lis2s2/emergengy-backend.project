@@ -11,7 +11,7 @@ import java.util.Properties;
 
 @ComponentScan(basePackages = "project.emergency.member.service")
 @Configuration
-public class AppConfig {
+public class MailConfig {
 
     @Bean
     public RestTemplate restTemplate() {
