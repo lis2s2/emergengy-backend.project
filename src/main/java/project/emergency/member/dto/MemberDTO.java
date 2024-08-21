@@ -48,12 +48,12 @@ public class MemberDTO {
     LocalDateTime modDate; //수정일
 
     public MemberDTO(String memId, String memPwd, String memName, String memEmail) {
-        this.memId = getMemId();
-        this.memPwd = getMemPwd();
-        this.memEmail = getMemEmail();
-        this.memName = getMemName();
-        this.memGrade = getMemGrade();
-        this.memRole = getMemRole();
-        this.memPoint = getMemPoint();
+//        this.memId = getMemId();
+//        this.memPwd = getMemPwd();
+//        this.memEmail = getMemEmail();
+//        this.memName = getMemName();
+//        this.memGrade = getMemGrade();
+//        this.memRole = getMemRole();
+//        this.memPoint = getMemPoint();
     }
 }

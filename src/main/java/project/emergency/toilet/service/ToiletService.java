@@ -12,13 +12,11 @@ public interface ToiletService {
     String registerInfo(ToiletDTO dto);
     ToiletDTO getByToiletNo(String toiletNo);
     List<ToiletDTO> getListByMemRegister();
-    List<ToiletDTO> getListByDisabled();
-    List<ToiletDTO> getListByDiaper();
-    List<ToiletDTO> getListBySeparated();
-    List<ToiletDTO> getListByPaper();
+//    List<ToiletDTO> getListByDisabled();
+//    List<ToiletDTO> getListByDiaper();
+//    List<ToiletDTO> getListBySeparated();
+//    List<ToiletDTO> getListByPaper();
     List<ToiletDTO> getListAll();
-
-
 
     default Toilet dtoToEntity(ToiletDTO dto) {
         Member member = Member.builder().memId(dto.getWriter()).build();

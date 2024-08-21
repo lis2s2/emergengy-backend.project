@@ -70,34 +70,34 @@ public class ToiletServiceImpl implements ToiletService {
     }
 
     // 여기서부터 사용X
-    @Override
-    public List<ToiletDTO> getListByDisabled() {
-        Boolean disabled = true;
-        List<Toilet> entityList = ToiletRepository.findByDisabled(disabled);
-        return entityList.stream().map(this::entityToDto).toList();
-    }
-
-    @Override
-    public List<ToiletDTO> getListByDiaper() {
-        Boolean diaper = true;
-        List<Toilet> entityList = ToiletRepository.findByDiaper(diaper);
-        return entityList.stream().map(this::entityToDto).toList();
-    }
-
-    @Override
-    public List<ToiletDTO> getListBySeparated() {
-        Boolean separated = true;
-        List<Toilet> entityList = ToiletRepository.findBySeparated(separated);
-        return entityList.stream().map(this::entityToDto).toList();
-    }
-
-    @Override
-    public List<ToiletDTO> getListByPaper() {
-        Boolean paper = true;
-        List<Toilet> entityList = ToiletRepository.findByPaper(paper);
-        return entityList.stream().map(this::entityToDto).toList();
-    }
-
+//    @Override
+//    public List<ToiletDTO> getListByDisabled() {
+//        Boolean disabled = true;
+//        List<Toilet> entityList = ToiletRepository.findByDisabled(disabled);
+//        return entityList.stream().map(this::entityToDto).toList();
+//    }
+//
+//    @Override
+//    public List<ToiletDTO> getListByDiaper() {
+//        Boolean diaper = true;
+//        List<Toilet> entityList = ToiletRepository.findByDiaper(diaper);
+//        return entityList.stream().map(this::entityToDto).toList();
+//    }
+//
+//    @Override
+//    public List<ToiletDTO> getListBySeparated() {
+//        Boolean separated = true;
+//        List<Toilet> entityList = ToiletRepository.findBySeparated(separated);
+//        return entityList.stream().map(this::entityToDto).toList();
+//    }
+//
+//    @Override
+//    public List<ToiletDTO> getListByPaper() {
+//        Boolean paper = true;
+//        List<Toilet> entityList = ToiletRepository.findByPaper(paper);
+//        return entityList.stream().map(this::entityToDto).toList();
+//    }
+//
     @Override
     public List<ToiletDTO> getListAll() {
         List<Toilet> entityList = ToiletRepository.findAll();

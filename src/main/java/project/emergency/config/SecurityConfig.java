@@ -91,24 +91,14 @@ public class SecurityConfig {
                 .requestMatchers("/**").permitAll()
 
 //                .requestMatchers(
-//                        "/register", "/login/*", "/logout", "/login/oauth2/**", "/api/*", "/register/**", "/search/*"
+//                        "/register", "/login/*", "/logout", "/login/oauth2/**", "/api/*", "/register/**", "/search/*", "/"
 //                        ).permitAll()
-//                .requestMatchers("/order/*", "/mypage/**", "/freecomment/*", "/helpcomment/*", "/shop/*", "/find/**").hasAnyRole("USER", "ADMIN")
-
-//                .requestMatchers("/helpboard/*").hasAnyRole("USER", "ADMIN")
-//                .requestMatchers("/shop/*").hasAnyRole("USER", "ADMIN")
-//                .requestMatchers("/order/*").hasAnyRole("USER", "ADMIN")
-//                .requestMatchers("/register/*").hasAnyRole("USER", "ADMIN")
-//                .requestMatchers("/mypage/*").hasAnyRole("USER", "ADMIN")
-//                .requestMatchers("/login/*").hasAnyRole("USER", "ADMIN")
-//                .requestMatchers("/search/*").hasAnyRole("USER", "ADMIN")
-//                .requestMatchers("/freecomment/*").hasAnyRole("USER", "ADMIN")
-//                .requestMatchers("/helpcomment/*").hasAnyRole("USER", "ADMIN")
-//                .requestMatchers("/member/*").hasRole("ADMIN") // 회원 관리는 관리자이면 접근 가능
-//                .anyRequest().authenticated()
+//                .requestMatchers("/order/*", "/mypage/**", "/freecomment/*", "/helpcomment/*", "/shop/*", "/find/**"
+//                        ).hasAnyRole("USER", "ADMIN")
+                .anyRequest().authenticated()
 
                 .and()
-//                // oauth2
+                // oauth2.0
                 .oauth2Login(oauth2 -> oauth2
                         .redirectionEndpoint(endpoint -> endpoint.baseUri("/login/oauth2/**"))
                         .userInfoEndpoint(endpoint -> endpoint.userService(oAuth2UserService))
@@ -116,8 +106,8 @@ public class SecurityConfig {
 
                 .csrf().disable() //csrf 비활성화
                 //토큰을 사용하니까 세션은 사용안함
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
                 .logout()
                 .logoutUrl("/logout")
                 .logoutSuccessHandler(logoutSuccessHandler());

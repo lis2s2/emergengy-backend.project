@@ -47,29 +47,29 @@ public class ToiletController {
     }
 
     // 여기서부터 사용X
-    @GetMapping("/list/byDisabled")
-    public ResponseEntity<List<ToiletDTO>> readByDisabled() {
-        List<ToiletDTO> list = service.getListByDisabled();
-        return new ResponseEntity<>(list, HttpStatus.OK);
-    }
-
-    @GetMapping("/list/byDiaper")
-    public ResponseEntity<List<ToiletDTO>> readByDiaper() {
-        List<ToiletDTO> list = service.getListByDiaper();
-        return new ResponseEntity<>(list, HttpStatus.OK);
-    }
-
-    @GetMapping("/list/bySeparated")
-    public ResponseEntity<List<ToiletDTO>> readBySeparated() {
-        List<ToiletDTO> list = service.getListBySeparated();
-        return new ResponseEntity<>(list, HttpStatus.OK);
-    }
-
-    @GetMapping("/list/byPaper")
-    public ResponseEntity<List<ToiletDTO>> readByPaper() {
-        List<ToiletDTO> list = service.getListByPaper();
-        return new ResponseEntity<>(list, HttpStatus.OK);
-    }
+//    @GetMapping("/list/byDisabled")
+//    public ResponseEntity<List<ToiletDTO>> readByDisabled() {
+//        List<ToiletDTO> list = service.getListByDisabled();
+//        return new ResponseEntity<>(list, HttpStatus.OK);
+//    }
+//
+//    @GetMapping("/list/byDiaper")
+//    public ResponseEntity<List<ToiletDTO>> readByDiaper() {
+//        List<ToiletDTO> list = service.getListByDiaper();
+//        return new ResponseEntity<>(list, HttpStatus.OK);
+//    }
+//
+//    @GetMapping("/list/bySeparated")
+//    public ResponseEntity<List<ToiletDTO>> readBySeparated() {
+//        List<ToiletDTO> list = service.getListBySeparated();
+//        return new ResponseEntity<>(list, HttpStatus.OK);
+//    }
+//
+//    @GetMapping("/list/byPaper")
+//    public ResponseEntity<List<ToiletDTO>> readByPaper() {
+//        List<ToiletDTO> list = service.getListByPaper();
+//        return new ResponseEntity<>(list, HttpStatus.OK);
+//    }
 
 
 

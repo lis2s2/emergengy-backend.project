@@ -111,6 +111,31 @@ public class MemberServiceImp implements MemberService {
         return false;
     }
 
+//    @Override
+//    public MemberDTO saveSocialMember(String memEmail) {
+//
+//        Optional<Member> result = repository.findByMemEmail(memEmail);
+//
+//        if (result.isPresent()) {
+//            return entityToDto(result.get());
+//        }
+//
+//        Member member = Member.builder()
+//                .memId(memEmail)
+//                .memName(memEmail)
+//                .memPwd(passwordEncoder.encode("skwlrmarmqgo"))
+//                .memG("Regular")
+//                .memRole("Role_USER")
+//                .memPoint(0)
+//                .build();
+//
+//        repository.save(member);
+//
+//        result = repository.findByMemEmail(memEmail);
+//
+//        return entityToDto(result.get());
+//    }
+
     @Override
     public MemberDTO readId(String id) {
         Optional<Member> result = repository.findById(id);
@@ -230,38 +255,12 @@ public class MemberServiceImp implements MemberService {
         return tempPwd.toString();
     }
 
-    // 임시 비밀번호로 비밀번호 업데이트
-//    @Transactional
-//    @Override
-//    public void updatePassword(String memId, String encodedPwd) {
-//
-//        Member member = repository.findById(memId).orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
-//
-//        member.setMemPwd(encodedPwd);
-//
-//        repository.save(member);
-//    }
-
     // 임시로 생성한 비번 encoding
     public String passwordEncoder(String tempPwd) {
         return passwordEncoder.encode(tempPwd);
     }
 }
 
-//    @Override
-//    public MemberDTO readPwd(String pwd) {
-//
-//        Optional<Member> result = repository.findByMemPwd(pwd);
-//
-//        if (result.isPresent()) {
-//
-//            Member member = result.get();
-//
-//            return entityToDto(member);
-//        } else {
-//            return null;
-//        }
-//    }
 
 
 

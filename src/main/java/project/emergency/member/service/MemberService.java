@@ -17,6 +17,8 @@ public interface MemberService {
 
     boolean login(MemberDTO dto); // 로그인
 
+//    MemberDTO saveSocialMember(String memEmail); // 소셜 로그인
+
     MemberDTO readId(String id); // 회원 아이디 단건 조회
 
     MemberDTO readEmail(String email); // 회원 이메일 단건 조회
@@ -25,11 +27,9 @@ public interface MemberService {
 
     String findpwd(String id, String name, String mail); // 비밀번호 찾기
 
-//    void updatePassword(String memId, String encodedPwd);
+    String getTempPassword(); // 임시 비밀번호
 
-    String getTempPassword();
-
-    String passwordEncoder(String tempPwd);
+    String passwordEncoder(String tempPwd); // 비밀번호 인코더
 
     boolean modifyMember(String memId, String memEmail, String memPwd); // 회원정보 수정
 

@@ -50,30 +50,6 @@ public class KakaoController {
 
         ResponseEntity<String> response = restTemplate.exchange(USER_INFO_URL, HttpMethod.GET, entity, String.class);
 
-//        try {
-//            String responseBody = response.getBody();
-//
-//
-//            JSONObject userInfo = new JSONObject();
-//            JSONObject kakaoAccount = userInfo;
-////            JSONObject profile = kakaoAccount.toJSONString();
-//
-//            Member member = new Member();
-//            member.setMemId(userInfo.getAsString("id"));
-//            member.setMemEmail(kakaoAccount.getAsString("email"));
-//            member.setMemName(kakaoAccount.getAsString("nickname"));
-//            member.setProviderId(kakaoAccount.getAsString("id"));
-//            member.setProvider("카카오");
-//            member.setMemRole("ROLE_USER");
-//            member.setMemGrade("FAMILY");
-//            member.setMemPoint(0);
-//
-//            kakaoUserService.saveKakaoUser(member);
-//
-//        } catch (Exception e) {
-//            return ResponseEntity.status(500).body("Error parsing JSON response");
-//        }
-
         return ResponseEntity.ok(response.getBody());
     }
 }

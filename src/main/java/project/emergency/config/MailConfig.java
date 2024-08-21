@@ -18,6 +18,7 @@ public class MailConfig {
         return new RestTemplate();
     }
 
+    // 계정 비밀번호는 변경함
     @Bean
     public JavaMailSender javaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
@@ -25,7 +26,7 @@ public class MailConfig {
         mailSender.setPort(587);
 
         mailSender.setUsername("hyeon6895@naver.com");
-        mailSender.setPassword("@l10991099");
+        mailSender.setPassword("dltngus");
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
