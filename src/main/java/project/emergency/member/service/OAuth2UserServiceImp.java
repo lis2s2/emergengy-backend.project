@@ -7,6 +7,7 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+import project.emergency.member.dto.MemberDTO;
 import project.emergency.member.repository.MemberRepository;
 
 @Service
@@ -35,7 +36,7 @@ public class OAuth2UserServiceImp extends DefaultOAuth2UserService {
             e.printStackTrace();
         }
 
-//        MemberDTO member = null;
+        MemberDTO member = null;
         String email = null;
 
         if (oauthClientName.equals("kakao")) {
