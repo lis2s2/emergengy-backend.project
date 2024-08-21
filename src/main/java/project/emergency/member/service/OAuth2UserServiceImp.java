@@ -50,10 +50,6 @@ public class OAuth2UserServiceImp extends DefaultOAuth2UserService {
             email = "google" + oAuth2User.getAttributes().get("id");
         }
 
-        // 자동으로 회원가입
-//        MemberDTO memberDTO = MemberService.saveSocialMember(memEmail);
-
-//        return new CustomUser(memberDTO);
         return oAuth2User;
     }
 }
